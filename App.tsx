@@ -70,13 +70,20 @@ const App: React.FC = () => {
   };
 
   const handlePlaceOrder = (tableId: string, items: CartItem[], total: number) => {
-    // 1. Create Order
+    // 1. Calculate Total Cost for Profit Analytics
+    const totalCost = items.reduce((sum, item) => {
+        const product = products.find(p => p.id === item.id);
+        return sum + ((product?.costPrice || 0) * item.quantity);
+    }, 0);
+
+    // 2. Create Order
     const newOrder: Order = {
       id: `ord-${Date.now()}`,
       orderNo: `${Date.now()}`,
       tableId,
       items,
       total,
+      totalCost, // Store cost basis
       status: OrderStatus.PENDING,
       timestamp: Date.now(),
       type: 'DINE_IN'
@@ -84,12 +91,12 @@ const App: React.FC = () => {
 
     setOrders(prev => [newOrder, ...prev]);
 
-    // 2. Update Table Status
+    // 3. Update Table Status
     setTables(prev => prev.map(t => 
       t.id === tableId ? { ...t, status: TableStatus.SCANNED, currentOrderId: newOrder.id } : t
     ));
 
-    // 3. Deduct Inventory
+    // 4. Deduct Inventory
     items.forEach(item => {
       handleStockUpdate(
         item.id, 
@@ -116,7 +123,7 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/" element={<Dashboard orders={orders} />} />
               <Route path="/pos" element={<POS tables={tables} products={products} onPlaceOrder={handlePlaceOrder} />} />
-              <Route path="/products" element={<ProductList products={products} />} />
+              <Route path="/products" element={<ProductList products={products} onUpdateProduct={handleUpdateProduct} />} />
               <Route path="/orders" element={<OrderList />} />
               <Route path="/users" element={<UserList />} />
               <Route path="/employees" element={<EmployeeList />} />

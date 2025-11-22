@@ -37,6 +37,7 @@ export const MOCK_ORDERS: Order[] = [
     tableId: 't2',
     items: [{ ...INITIAL_PRODUCTS[0], quantity: 1 }],
     total: 12.90,
+    totalCost: 6.50,
     status: OrderStatus.COMPLETED,
     timestamp: Date.now() - 10000000,
     type: 'DELIVERY',
@@ -48,6 +49,7 @@ export const MOCK_ORDERS: Order[] = [
     tableId: 't5',
     items: [{ ...INITIAL_PRODUCTS[7], quantity: 2 }],
     total: 17.60,
+    totalCost: 7.00,
     status: OrderStatus.PENDING,
     timestamp: Date.now() - 500000,
     type: 'DINE_IN'

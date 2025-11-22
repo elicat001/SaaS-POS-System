@@ -51,6 +51,7 @@ export interface Order {
   tableId: string;
   items: CartItem[];
   total: number;
+  totalCost?: number; // Added for profit calculation
   status: OrderStatus;
   paymentMethod?: string;
   timestamp: number;

@@ -2,7 +2,7 @@
 import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { Order } from '../types';
-import { RotateCcw, HelpCircle } from 'lucide-react';
+import { RotateCcw, HelpCircle, TrendingUp } from 'lucide-react';
 
 interface DashboardProps {
   orders: Order[];
@@ -12,9 +12,11 @@ const Dashboard: React.FC<DashboardProps> = ({ orders }) => {
   // Calculate real stats from props
   const stats = useMemo(() => {
     const totalRevenue = orders.reduce((acc, o) => acc + o.total, 0);
+    const totalCost = orders.reduce((acc, o) => acc + (o.totalCost || 0), 0);
+    const grossProfit = totalRevenue - totalCost;
     const count = orders.length;
     const avg = count > 0 ? totalRevenue / count : 0;
-    return { totalRevenue, count, avg };
+    return { totalRevenue, totalCost, grossProfit, count, avg };
   }, [orders]);
 
   // --- Chart Configs ---
@@ -44,13 +46,13 @@ const Dashboard: React.FC<DashboardProps> = ({ orders }) => {
   ];
 
   // --- Components ---
-  const MetricCard = ({ title, value, sub, isCurrency = false }: any) => (
-    <div className="bg-white p-5 h-full rounded-sm shadow-[0_1px_2px_rgba(0,0,0,0.05)] hover:shadow-md transition-shadow border border-transparent hover:border-emerald-100">
+  const MetricCard = ({ title, value, sub, isCurrency = false, highlight = false }: any) => (
+    <div className={`bg-white p-5 h-full rounded-sm shadow-[0_1px_2px_rgba(0,0,0,0.05)] hover:shadow-md transition-shadow border border-transparent hover:border-emerald-100 ${highlight ? 'bg-emerald-50/30 border-emerald-100' : ''}`}>
       <div className="flex items-center gap-1 text-slate-500 text-sm mb-3">
         {title}
         <HelpCircle size={13} className="text-slate-300" />
       </div>
-      <div className={`text-[26px] font-medium leading-none mb-3 ${isCurrency ? 'text-[#3b82f6]' : 'text-slate-800'}`}>
+      <div className={`text-[26px] font-medium leading-none mb-3 ${isCurrency ? 'text-[#3b82f6]' : (highlight ? 'text-emerald-600' : 'text-slate-800')}`}>
         {value}
       </div>
       {sub && <div className="text-xs text-slate-400">{sub}</div>}
@@ -115,9 +117,14 @@ const Dashboard: React.FC<DashboardProps> = ({ orders }) => {
           sub="营业实收=订单实收+收款实收"
           isCurrency
         />
+        <MetricCard 
+          title="营业毛利" 
+          value={stats.grossProfit.toFixed(2)} 
+          sub="营业毛利=营业实收-商品成本"
+          highlight
+        />
         <MetricCard title="访问量" value="3" />
         <MetricCard title="支付顾客数" value={stats.count} />
-        <MetricCard title="会员占比" value="0%" />
         <MetricCard title="人均" value={stats.avg.toFixed(2)} />
         <MetricCard title="翻台率" value="0%" />
       </div>
@@ -138,8 +145,8 @@ const Dashboard: React.FC<DashboardProps> = ({ orders }) => {
             
             <div className="flex justify-between items-end border-t border-slate-50 pt-4">
               <div>
-                 <div className="text-xs text-slate-500 mb-1">订单额</div>
-                 <div className="font-bold text-slate-800 text-lg">{stats.totalRevenue.toFixed(2)}</div>
+                 <div className="text-xs text-slate-500 mb-1">商品总成本</div>
+                 <div className="font-bold text-slate-800 text-lg">{stats.totalCost.toFixed(2)}</div>
               </div>
               <div className="text-right">
                  <div className="text-xs text-slate-500 mb-1">退款 <HelpCircle size={10} className="inline text-slate-300"/></div>
