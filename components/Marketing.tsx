@@ -43,7 +43,7 @@ const ToolLayout = ({
 }: { 
   title: string; 
   onBack: () => void; 
-  children: React.ReactNode; 
+  children?: React.ReactNode; 
   onSave: () => void;
   isEnabled: boolean;
   setIsEnabled: (v: boolean) => void;

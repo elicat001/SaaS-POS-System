@@ -41,8 +41,6 @@ const Sidebar: React.FC = () => {
         { label: '收银管理', path: '/cashier' },
         { label: '桌台管理', path: '/table-mgmt' },
         { label: '代客下单', path: '/pos' },
-        { label: '挂账管理', path: '/credit' },
-        { label: '交接班', path: '/handover' },
       ]
     },
     { 
@@ -52,7 +50,6 @@ const Sidebar: React.FC = () => {
         { label: '分类设置', path: '/categories' },
         { label: '商品列表', path: '/products' },
         { label: '进销存', path: '/inventory' },
-        { label: '标签管理', path: '/tags' },
       ] 
     },
     { title: '订单列表', icon: FileText, path: '/orders' },

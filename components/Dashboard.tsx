@@ -1,5 +1,5 @@
 
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { Order } from '../types';
 import { RotateCcw, HelpCircle, TrendingUp } from 'lucide-react';
@@ -8,16 +8,54 @@ interface DashboardProps {
   orders: Order[];
 }
 
+// --- Helper Components Moved Outside ---
+
+const MetricCard = ({ title, value, sub, isCurrency = false, highlight = false }: any) => (
+  <div className={`bg-white p-5 h-full rounded-sm shadow-[0_1px_2px_rgba(0,0,0,0.05)] hover:shadow-md transition-shadow border border-transparent hover:border-emerald-100 ${highlight ? 'bg-emerald-50/30 border-emerald-100' : ''}`}>
+    <div className="flex items-center gap-1 text-slate-500 text-sm mb-3">
+      {title}
+      <HelpCircle size={13} className="text-slate-300" />
+    </div>
+    <div className={`text-[26px] font-medium leading-none mb-3 ${isCurrency ? 'text-[#3b82f6]' : (highlight ? 'text-emerald-600' : 'text-slate-800')}`}>
+      {value}
+    </div>
+    {sub && <div className="text-xs text-slate-400">{sub}</div>}
+  </div>
+);
+
+const SectionTitle = ({ children }: { children?: React.ReactNode }) => (
+  <div className="flex items-center justify-between mb-5">
+     <h3 className="font-bold text-slate-800 text-[15px] flex items-center gap-1">
+      {children}
+    </h3>
+  </div>
+);
+
+const ChartLegend = ({ data }: { data: any[] }) => (
+  <div className="grid grid-cols-2 gap-y-2 gap-x-1 mt-4">
+    {data.map((item) => (
+      <div key={item.name} className="flex items-center gap-1.5 text-[11px] text-slate-500">
+         <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: item.color }}></span>
+         <span className="truncate max-w-[60px]">{item.name}</span>
+         <span className="text-slate-400 ml-auto">0.00%</span>
+      </div>
+    ))}
+  </div>
+);
+
 const Dashboard: React.FC<DashboardProps> = ({ orders }) => {
+  const [timeRange, setTimeRange] = useState('今天');
+
   // Calculate real stats from props
   const stats = useMemo(() => {
+    // In a real app, filtering by timeRange would happen here
     const totalRevenue = orders.reduce((acc, o) => acc + o.total, 0);
     const totalCost = orders.reduce((acc, o) => acc + (o.totalCost || 0), 0);
     const grossProfit = totalRevenue - totalCost;
     const count = orders.length;
     const avg = count > 0 ? totalRevenue / count : 0;
     return { totalRevenue, totalCost, grossProfit, count, avg };
-  }, [orders]);
+  }, [orders, timeRange]);
 
   // --- Chart Configs ---
   const COLORS = ['#fbbf24', '#34d399', '#60a5fa', '#a78bfa', '#f87171'];
@@ -45,55 +83,24 @@ const Dashboard: React.FC<DashboardProps> = ({ orders }) => {
     { name: '后台充值', value: 5, color: '#f87171' },
   ];
 
-  // --- Components ---
-  const MetricCard = ({ title, value, sub, isCurrency = false, highlight = false }: any) => (
-    <div className={`bg-white p-5 h-full rounded-sm shadow-[0_1px_2px_rgba(0,0,0,0.05)] hover:shadow-md transition-shadow border border-transparent hover:border-emerald-100 ${highlight ? 'bg-emerald-50/30 border-emerald-100' : ''}`}>
-      <div className="flex items-center gap-1 text-slate-500 text-sm mb-3">
-        {title}
-        <HelpCircle size={13} className="text-slate-300" />
-      </div>
-      <div className={`text-[26px] font-medium leading-none mb-3 ${isCurrency ? 'text-[#3b82f6]' : (highlight ? 'text-emerald-600' : 'text-slate-800')}`}>
-        {value}
-      </div>
-      {sub && <div className="text-xs text-slate-400">{sub}</div>}
-    </div>
-  );
-
-  const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-    <div className="flex items-center justify-between mb-5">
-       <h3 className="font-bold text-slate-800 text-[15px] flex items-center gap-1">
-        {children}
-      </h3>
-    </div>
-  );
-
-  const ChartLegend = ({ data }: { data: any[] }) => (
-    <div className="grid grid-cols-2 gap-y-2 gap-x-1 mt-4">
-      {data.map((item) => (
-        <div key={item.name} className="flex items-center gap-1.5 text-[11px] text-slate-500">
-           <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: item.color }}></span>
-           <span className="truncate max-w-[60px]">{item.name}</span>
-           <span className="text-slate-400 ml-auto">0.00%</span>
-        </div>
-      ))}
-    </div>
-  );
-
   return (
-    <div className="space-y-4 font-sans text-slate-600">
+    <div className="space-y-4 font-sans text-slate-600 animate-in fade-in duration-300">
       {/* --- Header Section --- */}
       <div className="bg-white p-5 rounded-sm shadow-sm">
         <h2 className="text-xl font-bold text-slate-900 mb-6">数据统计</h2>
         
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-             <div className="flex bg-white">
-              {['今天', '昨天', '本周', '本月', '上个月', '自定义'].map((t, i) => (
+             <div className="flex bg-white flex-wrap gap-2">
+              {['今天', '昨天', '本周', '本月', '上个月', '自定义'].map((t) => (
                 <button 
                   key={t}
+                  onClick={() => setTimeRange(t)}
                   className={`
-                    px-3 py-1 text-sm transition-colors mr-4
-                    ${i === 0 ? 'text-emerald-500 font-medium' : 'text-slate-500 hover:text-slate-800'}
+                    px-3 py-1 text-sm transition-all rounded-md
+                    ${timeRange === t 
+                      ? 'text-emerald-600 font-bold bg-emerald-50 shadow-sm ring-1 ring-emerald-100' 
+                      : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'}
                   `}
                 >
                   {t}
@@ -104,7 +111,9 @@ const Dashboard: React.FC<DashboardProps> = ({ orders }) => {
           
           <div className="text-xs text-slate-400 flex items-center gap-2">
             统计时间始于00:00:00 最后更新时间: {new Date().toLocaleTimeString()} 
-            <RotateCcw size={14} className="text-blue-500 cursor-pointer" />
+            <button className="hover:text-emerald-500 transition-colors" onClick={() => window.location.reload()}>
+               <RotateCcw size={14} className="cursor-pointer" />
+            </button>
           </div>
         </div>
       </div>
@@ -358,3 +367,4 @@ const Dashboard: React.FC<DashboardProps> = ({ orders }) => {
 };
 
 export default Dashboard;
+    

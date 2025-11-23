@@ -37,6 +37,7 @@ import AuxExternalDomain from './components/AuxExternalDomain';
 import InventoryManagement from './components/InventoryManagement';
 import SalesSummary from './components/SalesSummary';
 import Reports from './components/Reports';
+import CategorySettings from './components/CategorySettings';
 
 import { INITIAL_TABLES, MOCK_ORDERS, INITIAL_PRODUCTS, MOCK_SUPPLIERS, MOCK_STOCK_LOGS } from './constants';
 import { Order, Table, CartItem, OrderStatus, TableStatus, Product, Supplier, StockLog, StockTransactionType } from './types';
@@ -179,11 +180,8 @@ const App: React.FC = () => {
               <Route path="/aux/logistics" element={<AuxLogistics />} />
               <Route path="/aux/domain" element={<AuxExternalDomain />} />
               
-              {/* Legacy/Placeholder Routes */}
-              <Route path="/credit" element={<div className="p-10 text-center text-slate-500">挂账管理 - 🚧 施工中</div>} />
-              <Route path="/handover" element={<div className="p-10 text-center text-slate-500">交接班 - 🚧 施工中</div>} />
-              <Route path="/categories" element={<div className="p-10 text-center text-slate-500">分类设置 - 🚧 施工中</div>} />
-              <Route path="/tags" element={<div className="p-10 text-center text-slate-500">标签管理 - 🚧 施工中</div>} />
+              {/* Replaced Placeholder Route */}
+              <Route path="/categories" element={<CategorySettings products={products} />} />
               
               <Route path="/ai-insight" element={<AIAssistant orders={orders} />} />
               <Route path="*" element={<Navigate to="/" replace />} />
