@@ -40,6 +40,7 @@ const CATEGORY_DATA = [
 
 const Reports: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'DAILY' | 'PRODUCT' | 'CATEGORY'>('DAILY');
+  const [timeRange, setTimeRange] = useState('本月');
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
@@ -64,8 +65,8 @@ const Reports: React.FC = () => {
         </div>
 
         {/* Filters & Tabs */}
-        <div className="flex flex-col lg:flex-row justify-between gap-4 border-t border-slate-100 pt-6">
-           <div className="flex bg-slate-100 p-1 rounded-lg self-start">
+        <div className="flex flex-col xl:flex-row justify-between gap-4 border-t border-slate-100 pt-6">
+           <div className="flex bg-slate-100 p-1 rounded-lg self-start shrink-0">
               {[
                 { id: 'DAILY', label: '营业日报' },
                 { id: 'PRODUCT', label: '商品销售报表' },
@@ -86,12 +87,28 @@ const Reports: React.FC = () => {
            </div>
 
            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex bg-slate-100 rounded-lg p-1 text-sm font-medium">
+                 {['今天', '昨天', '本周', '本月', '自定义'].map(t => (
+                    <button 
+                       key={t}
+                       onClick={() => setTimeRange(t)}
+                       className={`px-3 py-1.5 rounded-md transition-all ${
+                          timeRange === t 
+                          ? 'bg-white text-emerald-600 shadow-sm' 
+                          : 'text-slate-500 hover:text-slate-700'
+                       }`}
+                    >
+                       {t}
+                    </button>
+                 ))}
+              </div>
+
               <div className="relative">
                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                  <input 
                     type="text" 
                     defaultValue="2025-11-01 ~ 2025-11-19"
-                    className="pl-9 pr-4 py-2 border border-slate-200 rounded text-sm w-56 focus:outline-none focus:border-emerald-500"
+                    className="pl-9 pr-4 py-2 border border-slate-200 rounded text-sm w-48 focus:outline-none focus:border-emerald-500"
                  />
               </div>
               <div className="relative">
