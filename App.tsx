@@ -13,12 +13,15 @@ import EmployeeList from './components/EmployeeList';
 import TableManagement from './components/TableManagement';
 import CashierManagement from './components/CashierManagement';
 import BalanceStatistics from './components/BalanceStatistics';
+import TableStatistics from './components/TableStatistics';
+import CommissionStatistics from './components/CommissionStatistics';
 import ConfigMiniProgram from './components/ConfigMiniProgram';
 import ConfigStoreSettings from './components/ConfigStoreSettings';
 import ConfigOrderNotify from './components/ConfigOrderNotify';
 import ConfigMiniProgramHelper from './components/ConfigMiniProgramHelper';
 import ConfigInterfaceSettings from './components/ConfigInterfaceSettings';
 import ConfigSecondaryPages from './components/ConfigSecondaryPages';
+import ConfigTemplateGallery from './components/ConfigTemplateGallery';
 import ConfigSystemSettings from './components/ConfigSystemSettings';
 import ConfigThirdPartyDelivery from './components/ConfigThirdPartyDelivery';
 import ConfigPrinterSettings from './components/ConfigPrinterSettings';
@@ -32,6 +35,8 @@ import AuxCustomerService from './components/AuxCustomerService';
 import AuxLogistics from './components/AuxLogistics';
 import AuxExternalDomain from './components/AuxExternalDomain';
 import InventoryManagement from './components/InventoryManagement';
+import SalesSummary from './components/SalesSummary';
+import Reports from './components/Reports';
 
 import { INITIAL_TABLES, MOCK_ORDERS, INITIAL_PRODUCTS, MOCK_SUPPLIERS, MOCK_STOCK_LOGS } from './constants';
 import { Order, Table, CartItem, OrderStatus, TableStatus, Product, Supplier, StockLog, StockTransactionType } from './types';
@@ -122,6 +127,9 @@ const App: React.FC = () => {
           <div className="p-6 min-w-[1000px]">
             <Routes>
               <Route path="/" element={<Dashboard orders={orders} />} />
+              <Route path="/sales-summary" element={<SalesSummary />} />
+              <Route path="/reports" element={<Reports />} />
+              
               <Route path="/pos" element={<POS tables={tables} products={products} onPlaceOrder={handlePlaceOrder} />} />
               <Route path="/products" element={<ProductList products={products} onUpdateProduct={handleUpdateProduct} />} />
               <Route path="/orders" element={<OrderList />} />
@@ -129,7 +137,10 @@ const App: React.FC = () => {
               <Route path="/employees" element={<EmployeeList />} />
               <Route path="/table-mgmt" element={<TableManagement />} />
               <Route path="/cashier" element={<CashierManagement />} />
+              
+              <Route path="/table-stats" element={<TableStatistics />} />
               <Route path="/balance-stats" element={<BalanceStatistics />} />
+              <Route path="/commission-stats" element={<CommissionStatistics />} />
               
               {/* Inventory Route */}
               <Route path="/inventory" element={
@@ -150,6 +161,7 @@ const App: React.FC = () => {
               <Route path="/config/helper" element={<ConfigMiniProgramHelper />} />
               <Route path="/config/interface" element={<ConfigInterfaceSettings />} />
               <Route path="/config/secondary-pages" element={<ConfigSecondaryPages />} />
+              <Route path="/config/templates" element={<ConfigTemplateGallery />} />
               <Route path="/config/system" element={<ConfigSystemSettings />} />
               <Route path="/config/delivery" element={<ConfigThirdPartyDelivery />} />
               <Route path="/config/printer" element={<ConfigPrinterSettings />} />
@@ -168,16 +180,9 @@ const App: React.FC = () => {
               <Route path="/aux/domain" element={<AuxExternalDomain />} />
               
               {/* Legacy/Placeholder Routes */}
-              <Route path="/sales-summary" element={<div className="p-10 text-center text-slate-500">销售汇总 - 🚧 施工中</div>} />
-              <Route path="/reports" element={<div className="p-10 text-center text-slate-500">营业报表 - 🚧 施工中</div>} />
-              <Route path="/table-stats" element={<div className="p-10 text-center text-slate-500">桌台统计 - 🚧 施工中</div>} />
-              <Route path="/commission-stats" element={<div className="p-10 text-center text-slate-500">提成统计 - 🚧 施工中</div>} />
               <Route path="/credit" element={<div className="p-10 text-center text-slate-500">挂账管理 - 🚧 施工中</div>} />
               <Route path="/handover" element={<div className="p-10 text-center text-slate-500">交接班 - 🚧 施工中</div>} />
               <Route path="/categories" element={<div className="p-10 text-center text-slate-500">分类设置 - 🚧 施工中</div>} />
-              <Route path="/stock-warning" element={<div className="p-10 text-center text-slate-500">库存预警 - 🚧 施工中</div>} />
-              <Route path="/specs" element={<div className="p-10 text-center text-slate-500">规格模板 - 🚧 施工中</div>} />
-              <Route path="/mandatory" element={<div className="p-10 text-center text-slate-500">必点商品 - 🚧 施工中</div>} />
               <Route path="/tags" element={<div className="p-10 text-center text-slate-500">标签管理 - 🚧 施工中</div>} />
               
               <Route path="/ai-insight" element={<AIAssistant orders={orders} />} />

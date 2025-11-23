@@ -51,9 +51,6 @@ const Sidebar: React.FC = () => {
       subItems: [
         { label: '分类设置', path: '/categories' },
         { label: '商品列表', path: '/products' },
-        { label: '库存预警', path: '/stock-warning' },
-        { label: '规格模板', path: '/specs' },
-        { label: '必点商品', path: '/mandatory' },
         { label: '进销存', path: '/inventory' },
         { label: '标签管理', path: '/tags' },
       ] 
@@ -70,6 +67,7 @@ const Sidebar: React.FC = () => {
         { label: '订单提醒', path: '/config/notify' },
         { label: '小程序助手', path: '/config/helper' },
         { label: '界面设置', path: '/config/interface' },
+        { label: '行业模板', path: '/config/templates' },
         { label: '二级页面', path: '/config/secondary-pages' },
         { label: '系统设置', path: '/config/system' },
         { label: '第三方配送', path: '/config/delivery' },

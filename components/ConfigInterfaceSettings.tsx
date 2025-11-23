@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Battery, Signal, Wifi, User, Search, ShoppingCart, ShoppingBag, Home, List, Settings, ChevronRight, Hexagon } from 'lucide-react';
 
 const ConfigInterfaceSettings: React.FC = () => {
@@ -14,7 +15,9 @@ const ConfigInterfaceSettings: React.FC = () => {
          <div className="flex gap-3">
             <button className="px-6 py-2 bg-emerald-500 text-white rounded hover:bg-emerald-600 text-sm">保存</button>
             <button className="px-4 py-2 border border-slate-200 text-slate-600 rounded hover:bg-slate-50 text-sm">保存到记录</button>
-            <button className="px-4 py-2 border border-slate-200 text-slate-600 rounded hover:bg-slate-50 text-sm">查看模板</button>
+            <Link to="/config/templates" className="px-4 py-2 border border-slate-200 text-slate-600 rounded hover:bg-slate-50 text-sm">
+              查看模板
+            </Link>
          </div>
       </div>
 

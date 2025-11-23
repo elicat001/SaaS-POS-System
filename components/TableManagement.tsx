@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
-import { INITIAL_TABLES, MOCK_RESERVATIONS, MOCK_ORDERS, INITIAL_PRODUCTS } from '../constants';
-import { Table, TableStatus, Reservation, ReservationStatus, CartItem } from '../types';
-import { Search, Plus, Maximize, MoreHorizontal, Calendar, Clock, User, Phone, Users, X, Printer, Wallet, RefreshCw, Trash2, Settings as SettingsIcon } from 'lucide-react';
+import { INITIAL_TABLES, MOCK_RESERVATIONS } from '../constants';
+import { Table, TableStatus, Reservation, ReservationStatus } from '../types';
+import { Search, Plus, Maximize, MoreHorizontal, Calendar, Clock, Users, X, Printer, Wallet, RefreshCw, Trash2 } from 'lucide-react';
 
 const TableManagement: React.FC = () => {
   // --- Main State ---
@@ -63,18 +63,44 @@ const TableManagement: React.FC = () => {
   };
 
   // 2. Table Management Handlers
-  const handleAddTable = () => {
-    if(!newTable.name) return;
+  const handleAddTable = (keepOpen: boolean = false) => {
+    if(!newTable.name.trim()) return;
+    
+    // Validation: Check for duplicates
+    if (tables.some(t => t.name === newTable.name.trim())) {
+        alert('该桌台名称已存在，请使用其他名称');
+        return;
+    }
+
     const table: Table = {
-      id: `t-${Date.now()}`,
-      name: newTable.name,
+      id: `t-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+      name: newTable.name.trim(),
       status: TableStatus.AVAILABLE,
       capacity: newTable.capacity,
       area: newTable.area
     };
-    setTables([...tables, table]);
-    setModals(prev => ({...prev, addTable: false}));
-    setNewTable({name: '', capacity: 4, area: areas[0]});
+    
+    setTables(prev => [...prev, table]);
+    
+    if (keepOpen) {
+        // Auto-increment logic for easier bulk entry
+        const match = newTable.name.match(/(\d+)$/);
+        if (match) {
+            const numberStr = match[1];
+            const number = parseInt(numberStr, 10) + 1;
+            // Pad with leading zeros if original had them
+            const newNumberStr = number.toString().padStart(numberStr.length, '0');
+            const newName = newTable.name.substring(0, match.index) + newNumberStr;
+            setNewTable(prev => ({ ...prev, name: newName }));
+        } else {
+            // If no number, just clear name but keep other settings
+            setNewTable(prev => ({ ...prev, name: '' }));
+        }
+    } else {
+        setModals(prev => ({...prev, addTable: false}));
+        // Reset, but keep the area as it's likely the next table is in the same area
+        setNewTable(prev => ({name: '', capacity: 4, area: prev.area}));
+    }
   };
 
   // 3. Area Management Handlers
@@ -111,7 +137,6 @@ const TableManagement: React.FC = () => {
   const handleSettleOrder = () => {
     if(!activeTable) return;
     setTables(tables.map(t => t.id === activeTable.id ? {...t, status: TableStatus.PAID} : t));
-    // Keep modal open but update view, or close it? Let's close and maybe show success
     setModals(prev => ({...prev, order: false}));
     setActiveTable(null);
   };
@@ -427,8 +452,16 @@ const TableManagement: React.FC = () => {
                <div className="p-6 space-y-4">
                   <div>
                      <label className="block text-sm font-medium text-slate-700 mb-1">桌台名称/号码 <span className="text-red-500">*</span></label>
-                     <input type="text" className="w-full px-3 py-2 border border-slate-200 rounded focus:outline-none focus:border-emerald-500"
-                           placeholder="如：A01" value={newTable.name} onChange={e => setNewTable({...newTable, name: e.target.value})} />
+                     <input 
+                        type="text" 
+                        className="w-full px-3 py-2 border border-slate-200 rounded focus:outline-none focus:border-emerald-500"
+                        placeholder="如：A01" 
+                        value={newTable.name} 
+                        autoFocus
+                        onChange={e => setNewTable({...newTable, name: e.target.value})}
+                        onKeyDown={e => e.key === 'Enter' && handleAddTable(false)}
+                     />
+                     <p className="text-[10px] text-slate-400 mt-1">支持批量添加时自动递增数字后缀 (例: A01 &rarr; A02)</p>
                   </div>
                   <div>
                      <label className="block text-sm font-medium text-slate-700 mb-1">所属区域</label>
@@ -446,9 +479,22 @@ const TableManagement: React.FC = () => {
                      </div>
                   </div>
                </div>
-               <div className="bg-slate-50 px-6 py-4 border-t border-slate-100 flex justify-end gap-3">
-                  <button onClick={() => setModals(p => ({...p, addTable: false}))} className="px-4 py-2 border border-slate-200 rounded text-sm text-slate-600 hover:bg-slate-100">取消</button>
-                  <button onClick={handleAddTable} className="px-6 py-2 bg-emerald-500 text-white rounded text-sm hover:bg-emerald-600">确认添加</button>
+               <div className="bg-slate-50 px-6 py-4 border-t border-slate-100 flex justify-between items-center gap-2">
+                  <button onClick={() => setModals(p => ({...p, addTable: false}))} className="px-3 py-2 text-sm text-slate-500 hover:text-slate-700">取消</button>
+                  <div className="flex gap-2">
+                     <button 
+                        onClick={() => handleAddTable(true)} 
+                        className="px-3 py-2 border border-emerald-500 text-emerald-600 rounded text-sm font-medium hover:bg-emerald-50 transition-colors"
+                     >
+                        保存并继续
+                     </button>
+                     <button 
+                        onClick={() => handleAddTable(false)} 
+                        className="px-4 py-2 bg-emerald-500 text-white rounded text-sm font-medium hover:bg-emerald-600 shadow-sm shadow-emerald-200 transition-colors"
+                     >
+                        确认添加
+                     </button>
+                  </div>
                </div>
             </div>
          </div>
