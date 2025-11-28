@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, LineChart, Line, XAxis, YAxis, CartesianGrid, BarChart, Bar, Legend } from 'recharts';
 import { Order } from '../types';
 import { RotateCcw, HelpCircle, TrendingUp } from 'lucide-react';
 
@@ -56,6 +56,49 @@ const Dashboard: React.FC<DashboardProps> = ({ orders }) => {
     const avg = count > 0 ? totalRevenue / count : 0;
     return { totalRevenue, totalCost, grossProfit, count, avg };
   }, [orders, timeRange]);
+
+  // Generate sales trend data
+  const salesTrendData = useMemo(() => {
+    // Mock hourly data for the last 24 hours
+    const now = Date.now();
+    const data = [];
+    for (let i = 23; i >= 0; i--) {
+      const hour = new Date(now - i * 3600000).getHours();
+      // Random sales amount between 0-50
+      const sales = Math.random() * 50;
+      data.push({
+        time: `${hour}:00`,
+        sales: parseFloat(sales.toFixed(2))
+      });
+    }
+    return data;
+  }, []);
+
+  // Generate product sales ranking
+  const productSalesData = useMemo(() => {
+    const productMap = new Map<string, { name: string; sales: number; quantity: number }>();
+    
+    orders.forEach(order => {
+      order.items.forEach(item => {
+        if (productMap.has(item.id)) {
+          const existing = productMap.get(item.id)!;
+          existing.sales += item.price * item.quantity;
+          existing.quantity += item.quantity;
+        } else {
+          productMap.set(item.id, {
+            name: item.name,
+            sales: item.price * item.quantity,
+            quantity: item.quantity
+          });
+        }
+      });
+    });
+    
+    // Convert to array and sort by sales
+    return Array.from(productMap.values())
+      .sort((a, b) => b.sales - a.sales)
+      .slice(0, 10); // Top 10 products
+  }, [orders]);
 
   // --- Chart Configs ---
   const COLORS = ['#fbbf24', '#34d399', '#60a5fa', '#a78bfa', '#f87171'];
@@ -136,6 +179,43 @@ const Dashboard: React.FC<DashboardProps> = ({ orders }) => {
         <MetricCard title="支付顾客数" value={stats.count} />
         <MetricCard title="人均" value={stats.avg.toFixed(2)} />
         <MetricCard title="翻台率" value="0%" />
+      </div>
+
+      {/* --- Sales Trend Chart --- */}
+      <div className="bg-white p-6 rounded-sm shadow-sm">
+        <SectionTitle>销售趋势</SectionTitle>
+        <div className="h-64">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={salesTrendData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis 
+                dataKey="time" 
+                stroke="#94a3b8"
+                tick={{ fontSize: 12 }}
+              />
+              <YAxis 
+                stroke="#94a3b8"
+                tick={{ fontSize: 12 }}
+              />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: 'white', 
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '4px',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                }}
+              />
+              <Line 
+                type="monotone" 
+                dataKey="sales" 
+                stroke="#3b82f6" 
+                strokeWidth={2}
+                dot={{ fill: '#3b82f6', r: 3 }}
+                activeDot={{ r: 5 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       </div>
 
       {/* --- Middle Section: Orders --- */}
@@ -293,6 +373,55 @@ const Dashboard: React.FC<DashboardProps> = ({ orders }) => {
                <div className="text-[#3b82f6] text-xs mt-1 cursor-pointer hover:underline">显示更多</div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* --- Product Sales Ranking --- */}
+      <div className="bg-white p-6 rounded-sm shadow-sm">
+        <SectionTitle>商品销售排行</SectionTitle>
+        <div className="h-80">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={productSalesData} layout="vertical">
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis 
+                type="number" 
+                stroke="#94a3b8"
+                tick={{ fontSize: 12 }}
+              />
+              <YAxis 
+                dataKey="name" 
+                type="category" 
+                stroke="#94a3b8"
+                tick={{ fontSize: 12 }}
+                width={150}
+              />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: 'white', 
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '4px',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                }}
+                formatter={(value, name) => [
+                  name === 'sales' ? `¥${value.toFixed(2)}` : value,
+                  name === 'sales' ? '销售额' : '销量'
+                ]}
+              />
+              <Legend />
+              <Bar 
+                dataKey="sales" 
+                fill="#3b82f6" 
+                name="销售额"
+                radius={[0, 4, 4, 0]}
+              />
+              <Bar 
+                dataKey="quantity" 
+                fill="#34d399" 
+                name="销量"
+                radius={[0, 4, 4, 0]}
+              />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
       </div>
 

@@ -54,7 +54,6 @@ const Sidebar: React.FC = () => {
     },
     { title: '订单列表', icon: FileText, path: '/orders' },
     { title: '用户列表', icon: Users, path: '/users' },
-    { title: '员工管理', icon: UserCog, path: '/employees' },
     { 
       title: '配置管理', 
       icon: Settings, 

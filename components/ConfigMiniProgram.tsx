@@ -65,7 +65,7 @@ const ConfigMiniProgram: React.FC = () => {
              <span className="w-24 text-sm text-slate-500">服务类目</span>
              <div className="flex items-center gap-4">
                 <span className="bg-emerald-50 text-emerald-600 border border-emerald-200 px-2 py-1 text-xs rounded">
-                   餐饮服务>餐饮服务场所/餐饮服务管理企业 ×
+                   餐饮服务{'>'}餐饮服务场所/餐饮服务管理企业 ×
                 </span>
                 <span className="text-emerald-500 text-sm cursor-pointer">添加</span>
              </div>

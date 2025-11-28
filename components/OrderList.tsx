@@ -57,15 +57,15 @@ const OrderList: React.FC = () => {
         
         <div className="flex gap-12 mt-4">
            <div>
-              <div className="text-sm text-slate-500 mb-1">总订单数 ></div>
+              <div className="text-sm text-slate-500 mb-1">总订单数 {'>'}</div>
               <div className="text-2xl font-bold text-slate-800">2</div>
            </div>
            <div>
-              <div className="text-sm text-slate-500 mb-1">已支付金额 ></div>
+              <div className="text-sm text-slate-500 mb-1">已支付金额 {'>'}</div>
               <div className="text-2xl font-bold text-slate-800">0.00</div>
            </div>
            <div>
-              <div className="text-sm text-slate-500 mb-1">退款金额 ></div>
+              <div className="text-sm text-slate-500 mb-1">退款金额 {'>'}</div>
               <div className="text-2xl font-bold text-slate-800">0.00</div>
            </div>
         </div>

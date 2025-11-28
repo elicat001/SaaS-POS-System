@@ -67,7 +67,7 @@ const UserList: React.FC = () => {
                </div>
                <div>
                   <div className="text-slate-500 text-sm mb-1">总余额</div>
-                  <div className="text-2xl font-bold text-slate-800 flex items-center gap-1">10.00 <span className="text-slate-400 text-lg">></span></div>
+                  <div className="text-2xl font-bold text-slate-800 flex items-center gap-1">10.00 <span className="text-slate-400 text-lg">{'>'}</span></div>
                </div>
                <div>
                   <div className="text-slate-500 text-sm mb-1">总积分</div>

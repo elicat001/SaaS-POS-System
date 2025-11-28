@@ -9,7 +9,7 @@ import AIAssistant from './components/AIAssistant';
 import ProductList from './components/ProductList';
 import OrderList from './components/OrderList';
 import UserList from './components/UserList';
-import EmployeeList from './components/EmployeeList';
+
 import TableManagement from './components/TableManagement';
 import CashierManagement from './components/CashierManagement';
 import BalanceStatistics from './components/BalanceStatistics';
@@ -135,7 +135,7 @@ const App: React.FC = () => {
               <Route path="/products" element={<ProductList products={products} onUpdateProduct={handleUpdateProduct} />} />
               <Route path="/orders" element={<OrderList />} />
               <Route path="/users" element={<UserList />} />
-              <Route path="/employees" element={<EmployeeList />} />
+
               <Route path="/table-mgmt" element={<TableManagement />} />
               <Route path="/cashier" element={<CashierManagement />} />
               
