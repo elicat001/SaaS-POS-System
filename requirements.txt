@@ -1,0 +1,22 @@
+# FastAPI后端依赖
+
+# Web框架
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+
+# 数据库
+sqlalchemy>=2.0.0
+
+# 数据验证
+pydantic>=2.6.0
+
+# 日期处理
+python-dateutil>=2.8.2
+
+# 可选：Google Gemini AI（仅在需要AI功能时安装）
+# google-genai>=1.0.0
+
+# 开发依赖
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+httpx>=0.24.0
