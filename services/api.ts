@@ -577,16 +577,6 @@ export const analyticsApi = {
   },
 };
 
-// ==================== AI服务代理API ====================
-
-export const aiApi = {
-  generateInsight: (salesData: unknown, recentOrders: unknown) =>
-    http.post<{ insight: string }>('/ai/insight', { salesData, recentOrders }),
-
-  generateProductDescription: (productName: string) =>
-    http.post<{ description: string }>('/ai/product-description', { productName }),
-};
-
 // ==================== 界面装修API ====================
 
 import type {
@@ -673,6 +663,5 @@ export default {
   reservations: reservationApi,
   inventory: inventoryApi,
   analytics: analyticsApi,
-  ai: aiApi,
   interface: interfaceApi,
 };

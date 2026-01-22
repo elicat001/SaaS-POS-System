@@ -14,7 +14,7 @@ from fastapi.responses import JSONResponse
 from backend.app.database import Base, engine, SessionLocal
 from backend.app.routers import (
     products, categories, suppliers, tables, users,
-    orders, reservations, inventory, analytics, auth, ai_proxy,
+    orders, reservations, inventory, analytics, auth,
     interface
 )
 from backend.app import models
@@ -131,9 +131,6 @@ async def log_requests(request: Request, call_next):
 
 # 认证路由（不需要前缀，已在路由中定义）
 app.include_router(auth.router)
-
-# AI代理路由
-app.include_router(ai_proxy.router)
 
 # 业务路由
 app.include_router(categories.router)

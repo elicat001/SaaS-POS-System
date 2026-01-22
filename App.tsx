@@ -19,7 +19,6 @@ import ProtectedRoute from './components/ProtectedRoute';
 // Page Components
 import Dashboard from './components/Dashboard';
 import POS from './components/POS';
-import AIAssistant from './components/AIAssistant';
 import ProductList from './components/ProductList';
 import OrderList from './components/OrderList';
 import UserList from './components/UserList';
@@ -310,15 +309,6 @@ const AppRoutes: React.FC = () => {
         <ProtectedRoute>
           <MainLayout>
             <CategorySettings products={products} />
-          </MainLayout>
-        </ProtectedRoute>
-      } />
-
-      {/* AI洞察 */}
-      <Route path="/ai-insight" element={
-        <ProtectedRoute>
-          <MainLayout>
-            <AIAssistant orders={orders} />
           </MainLayout>
         </ProtectedRoute>
       } />
