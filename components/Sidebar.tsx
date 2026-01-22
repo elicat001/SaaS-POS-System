@@ -73,7 +73,6 @@ const Sidebar: React.FC = () => {
     },
 
     { title: '营销管理', icon: Megaphone, path: '/marketing' },
-    { title: '应用中心', icon: Grid, path: '/apps' },
   ];
 
   const toggleMenu = (title: string) => {

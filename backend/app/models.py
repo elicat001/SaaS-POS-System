@@ -279,233 +279,6 @@ class StockLog(Base):
     )
 
 
-# ==================== 应用中心模型 ====================
-
-class App(Base, TimestampMixin):
-    """应用定义"""
-    __tablename__ = "apps"
-
-    id = Column(String, primary_key=True)  # 使用固定ID如 'wine-storage'
-    name = Column(String(100), nullable=False)
-    description = Column(Text, nullable=True)
-    icon = Column(String(50), nullable=True)
-    category = Column(String(20), nullable=False)  # 'builtin' | 'integration'
-    version = Column(String(20), default='1.0.0')
-    isActive = Column(Boolean, default=True, nullable=False)
-    configSchema = Column(Text, nullable=True)  # JSON schema for app config
-    route = Column(String(100), nullable=True)  # 应用路由路径
-
-    # 关系
-    installations = relationship("AppInstallation", back_populates="app", cascade="all, delete-orphan")
-
-    # 索引
-    __table_args__ = (
-        Index('idx_app_category', 'category'),
-        Index('idx_app_active', 'isActive'),
-    )
-
-
-class AppInstallation(Base, TimestampMixin):
-    """应用安装记录"""
-    __tablename__ = "app_installations"
-
-    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    appId = Column(String, ForeignKey("apps.id"), nullable=False)
-    status = Column(String(20), default='active')  # 'active' | 'disabled'
-    config = Column(Text, nullable=True)  # JSON配置
-
-    # 关系
-    app = relationship("App", back_populates="installations")
-
-    # 索引
-    __table_args__ = (
-        Index('idx_app_installation_app', 'appId'),
-        Index('idx_app_installation_status', 'status'),
-    )
-
-
-class ThirdPartyIntegration(Base, TimestampMixin):
-    """第三方平台集成"""
-    __tablename__ = "third_party_integrations"
-
-    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    platform = Column(String(20), nullable=False, unique=True)  # 'jd' | 'eleme' | 'meituan'
-    appKey = Column(String(200), nullable=True)
-    appSecret = Column(String(200), nullable=True)
-    accessToken = Column(Text, nullable=True)
-    refreshToken = Column(Text, nullable=True)
-    tokenExpiry = Column(String, nullable=True)
-    shopId = Column(String(100), nullable=True)
-    status = Column(String(20), default='disconnected')  # 'connected' | 'disconnected' | 'error'
-    lastSyncAt = Column(String, nullable=True)
-    errorMessage = Column(Text, nullable=True)
-
-    # 索引
-    __table_args__ = (
-        Index('idx_integration_platform', 'platform'),
-        Index('idx_integration_status', 'status'),
-    )
-
-
-# ==================== 应用数据模型 ====================
-
-class WineStorage(Base, TimestampMixin):
-    """存酒记录"""
-    __tablename__ = "wine_storage"
-
-    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    customerId = Column(String, ForeignKey("users.id"), nullable=False)
-    customerName = Column(String(100), nullable=False)
-    customerPhone = Column(String(20), nullable=False)
-    wineName = Column(String(200), nullable=False)
-    wineType = Column(String(50), nullable=True)  # 白酒、红酒、啤酒等
-    quantity = Column(Float, nullable=False)  # 存酒数量（瓶/ml）
-    unit = Column(String(20), default='瓶')
-    storageDate = Column(String, nullable=False)
-    expiryDate = Column(String, nullable=True)  # 存酒有效期
-    status = Column(String(20), default='stored')  # 'stored' | 'retrieved' | 'expired'
-    notes = Column(Text, nullable=True)
-    retrievedAt = Column(String, nullable=True)
-    retrievedQuantity = Column(Float, nullable=True)
-
-    __table_args__ = (
-        Index('idx_wine_customer', 'customerId'),
-        Index('idx_wine_phone', 'customerPhone'),
-        Index('idx_wine_status', 'status'),
-    )
-
-
-class Review(Base, TimestampMixin):
-    """订单评价"""
-    __tablename__ = "reviews"
-
-    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    orderId = Column(String, ForeignKey("orders.id"), nullable=False)
-    customerId = Column(String, ForeignKey("users.id"), nullable=True)
-    customerName = Column(String(100), nullable=True)
-    rating = Column(Integer, nullable=False)  # 1-5星
-    tasteRating = Column(Integer, nullable=True)  # 口味评分
-    serviceRating = Column(Integer, nullable=True)  # 服务评分
-    environmentRating = Column(Integer, nullable=True)  # 环境评分
-    content = Column(Text, nullable=True)
-    images = Column(Text, nullable=True)  # JSON数组
-    reply = Column(Text, nullable=True)  # 商家回复
-    repliedAt = Column(String, nullable=True)
-    isAnonymous = Column(Boolean, default=False)
-    status = Column(String(20), default='visible')  # 'visible' | 'hidden'
-
-    __table_args__ = (
-        Index('idx_review_order', 'orderId'),
-        Index('idx_review_customer', 'customerId'),
-        Index('idx_review_rating', 'rating'),
-        Index('idx_review_status', 'status'),
-    )
-
-
-class QueueTicket(Base, TimestampMixin):
-    """排队取号"""
-    __tablename__ = "queue_tickets"
-
-    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    ticketNo = Column(String(20), nullable=False)  # 排队号如 A001
-    queueType = Column(String(20), nullable=False)  # 'small' | 'medium' | 'large' 小桌/中桌/大桌
-    customerName = Column(String(100), nullable=True)
-    customerPhone = Column(String(20), nullable=False)
-    partySize = Column(Integer, nullable=False)  # 就餐人数
-    status = Column(String(20), default='waiting')  # 'waiting' | 'called' | 'seated' | 'cancelled' | 'expired'
-    calledAt = Column(String, nullable=True)
-    seatedAt = Column(String, nullable=True)
-    tableId = Column(String, ForeignKey("tables.id"), nullable=True)
-    estimatedWaitMinutes = Column(Integer, nullable=True)
-    notificationSent = Column(Boolean, default=False)
-
-    __table_args__ = (
-        Index('idx_queue_status', 'status'),
-        Index('idx_queue_type', 'queueType'),
-        Index('idx_queue_phone', 'customerPhone'),
-    )
-
-
-class Invoice(Base, TimestampMixin):
-    """发票申请"""
-    __tablename__ = "invoices"
-
-    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    orderId = Column(String, ForeignKey("orders.id"), nullable=False)
-    invoiceType = Column(String(20), nullable=False)  # 'personal' | 'company' 个人/企业
-    titleType = Column(String(20), nullable=False)  # 'general' | 'special' 普票/专票
-    title = Column(String(200), nullable=False)  # 发票抬头
-    taxNumber = Column(String(50), nullable=True)  # 税号
-    companyAddress = Column(String(300), nullable=True)
-    companyPhone = Column(String(30), nullable=True)
-    bankName = Column(String(100), nullable=True)
-    bankAccount = Column(String(50), nullable=True)
-    amount = Column(Float, nullable=False)
-    email = Column(String(100), nullable=True)  # 接收电子发票的邮箱
-    status = Column(String(20), default='pending')  # 'pending' | 'issued' | 'rejected' | 'cancelled'
-    invoiceNo = Column(String(50), nullable=True)  # 发票号码
-    invoiceUrl = Column(String(500), nullable=True)  # 电子发票下载地址
-    issuedAt = Column(String, nullable=True)
-    rejectedReason = Column(Text, nullable=True)
-
-    __table_args__ = (
-        Index('idx_invoice_order', 'orderId'),
-        Index('idx_invoice_status', 'status'),
-        Index('idx_invoice_type', 'invoiceType'),
-    )
-
-
-class StoreWifiConfig(Base, TimestampMixin):
-    """门店WiFi配置"""
-    __tablename__ = "store_wifi_configs"
-
-    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    ssid = Column(String(100), nullable=False)  # WiFi名称
-    password = Column(String(100), nullable=True)
-    encryptionType = Column(String(20), default='WPA2')  # 'OPEN' | 'WEP' | 'WPA' | 'WPA2'
-    isDefault = Column(Boolean, default=False)
-    description = Column(String(200), nullable=True)  # 如"顾客WiFi"、"员工WiFi"
-
-
-class FormTemplate(Base, TimestampMixin, SoftDeleteMixin):
-    """表单模板"""
-    __tablename__ = "form_templates"
-
-    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    name = Column(String(200), nullable=False)
-    description = Column(Text, nullable=True)
-    fields = Column(Text, nullable=False)  # JSON定义的表单字段
-    status = Column(String(20), default='active')  # 'active' | 'inactive'
-    submissionCount = Column(Integer, default=0)
-
-    # 关系
-    submissions = relationship("FormSubmission", back_populates="template", cascade="all, delete-orphan")
-
-    __table_args__ = (
-        Index('idx_form_template_status', 'status'),
-        Index('idx_form_template_deleted', 'isDeleted'),
-    )
-
-
-class FormSubmission(Base, TimestampMixin):
-    """表单提交"""
-    __tablename__ = "form_submissions"
-
-    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    templateId = Column(String, ForeignKey("form_templates.id"), nullable=False)
-    data = Column(Text, nullable=False)  # JSON提交的数据
-    submitterName = Column(String(100), nullable=True)
-    submitterPhone = Column(String(20), nullable=True)
-    submitterIp = Column(String(50), nullable=True)
-
-    # 关系
-    template = relationship("FormTemplate", back_populates="submissions")
-
-    __table_args__ = (
-        Index('idx_form_submission_template', 'templateId'),
-    )
-
-
 # ==================== 配置相关模型 ====================
 
 class SystemConfig(Base, TimestampMixin):
@@ -574,19 +347,180 @@ def supplier_before_update(mapper, connection, target):
     target.updatedAt = datetime.utcnow().isoformat()
 
 
-@event.listens_for(App, 'before_update')
-def app_before_update(mapper, connection, target):
-    """应用更新前设置更新时间"""
+# ==================== 界面装修模型 ====================
+
+class InterfacePage(Base, TimestampMixin):
+    """界面页面配置"""
+    __tablename__ = "interface_pages"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    pageType = Column(String(50), nullable=False)  # 'home' | 'user' | 'order' | 'category' | 'product_detail'
+    name = Column(String(100), nullable=False)
+    description = Column(Text, nullable=True)
+    backgroundColor = Column(String(20), default='#f8fafc')
+    backgroundImage = Column(String(500), nullable=True)
+    isPublished = Column(Boolean, default=False)
+    publishedAt = Column(String, nullable=True)
+    version = Column(Integer, default=1)
+
+    # 关系
+    widgets = relationship("InterfaceWidget", back_populates="page", cascade="all, delete-orphan", order_by="InterfaceWidget.sortOrder")
+    histories = relationship("InterfaceHistory", back_populates="page", cascade="all, delete-orphan")
+
+    __table_args__ = (
+        Index('idx_interface_page_type', 'pageType'),
+        Index('idx_interface_page_published', 'isPublished'),
+    )
+
+
+class InterfaceWidget(Base, TimestampMixin):
+    """界面组件"""
+    __tablename__ = "interface_widgets"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    pageId = Column(String, ForeignKey("interface_pages.id"), nullable=False)
+    widgetType = Column(String(50), nullable=False)  # 组件类型
+    name = Column(String(100), nullable=True)  # 组件名称（可选）
+    props = Column(Text, nullable=False)  # JSON格式的组件属性
+    style = Column(Text, nullable=True)  # JSON格式的样式
+    sortOrder = Column(Integer, default=0)
+    isVisible = Column(Boolean, default=True)
+
+    # 关系
+    page = relationship("InterfacePage", back_populates="widgets")
+
+    __table_args__ = (
+        Index('idx_widget_page', 'pageId'),
+        Index('idx_widget_type', 'widgetType'),
+        Index('idx_widget_sort', 'sortOrder'),
+    )
+
+
+class InterfaceTemplate(Base, TimestampMixin):
+    """界面模板"""
+    __tablename__ = "interface_templates"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    name = Column(String(100), nullable=False)
+    description = Column(Text, nullable=True)
+    thumbnail = Column(String(500), nullable=True)
+    category = Column(String(50), nullable=False)  # 'official' | 'custom' | 'industry'
+    industry = Column(String(50), nullable=True)  # 'restaurant' | 'cafe' | 'bar' | 'retail'
+    pageType = Column(String(50), nullable=False)  # 适用的页面类型
+    config = Column(Text, nullable=False)  # JSON完整配置
+    isSystem = Column(Boolean, default=False)  # 是否系统预设
+    useCount = Column(Integer, default=0)
+
+    __table_args__ = (
+        Index('idx_template_category', 'category'),
+        Index('idx_template_industry', 'industry'),
+        Index('idx_template_page_type', 'pageType'),
+    )
+
+
+class InterfaceTheme(Base, TimestampMixin):
+    """界面主题"""
+    __tablename__ = "interface_themes"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    name = Column(String(100), nullable=False)
+    description = Column(Text, nullable=True)
+    primaryColor = Column(String(20), default='#10b981')
+    secondaryColor = Column(String(20), default='#3b82f6')
+    accentColor = Column(String(20), default='#f59e0b')
+    textColor = Column(String(20), default='#1e293b')
+    backgroundColor = Column(String(20), default='#ffffff')
+    borderRadius = Column(String(20), default='8px')
+    fontFamily = Column(String(100), default='system-ui')
+    customCss = Column(Text, nullable=True)
+    isActive = Column(Boolean, default=False)
+    isSystem = Column(Boolean, default=False)
+
+    __table_args__ = (
+        Index('idx_theme_active', 'isActive'),
+    )
+
+
+class InterfaceHistory(Base, TimestampMixin):
+    """界面配置历史（版本控制）"""
+    __tablename__ = "interface_histories"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    pageId = Column(String, ForeignKey("interface_pages.id"), nullable=False)
+    version = Column(Integer, nullable=False)
+    config = Column(Text, nullable=False)  # JSON快照
+    operationType = Column(String(20), nullable=False)  # 'create' | 'update' | 'publish' | 'restore'
+    operatorId = Column(String, nullable=True)
+    operatorName = Column(String(100), nullable=True)
+    description = Column(String(200), nullable=True)  # 版本描述
+
+    # 关系
+    page = relationship("InterfacePage", back_populates="histories")
+
+    __table_args__ = (
+        Index('idx_history_page', 'pageId'),
+        Index('idx_history_version', 'version'),
+    )
+
+
+class InterfaceNavBar(Base, TimestampMixin):
+    """底部导航栏配置"""
+    __tablename__ = "interface_navbars"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    name = Column(String(100), default='默认导航栏')
+    backgroundColor = Column(String(20), default='#ffffff')
+    activeColor = Column(String(20), default='#10b981')
+    inactiveColor = Column(String(20), default='#94a3b8')
+    items = Column(Text, nullable=False)  # JSON数组 [{icon, label, path, badge}]
+    isActive = Column(Boolean, default=True)
+
+
+class InterfacePopup(Base, TimestampMixin):
+    """弹窗/浮层配置"""
+    __tablename__ = "interface_popups"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    name = Column(String(100), nullable=False)
+    popupType = Column(String(50), nullable=False)  # 'coupon' | 'activity' | 'announcement' | 'custom'
+    title = Column(String(200), nullable=True)
+    content = Column(Text, nullable=True)
+    imageUrl = Column(String(500), nullable=True)
+    linkUrl = Column(String(500), nullable=True)
+    linkType = Column(String(50), nullable=True)  # 'page' | 'product' | 'category' | 'external'
+    position = Column(String(50), default='center')  # 'center' | 'bottom' | 'top'
+    showOnce = Column(Boolean, default=True)
+    startTime = Column(String, nullable=True)
+    endTime = Column(String, nullable=True)
+    isActive = Column(Boolean, default=True)
+    triggerType = Column(String(50), default='enter')  # 'enter' | 'scroll' | 'delay' | 'exit'
+    triggerValue = Column(String(50), nullable=True)  # 触发条件值
+
+    __table_args__ = (
+        Index('idx_popup_type', 'popupType'),
+        Index('idx_popup_active', 'isActive'),
+    )
+
+
+@event.listens_for(InterfacePage, 'before_update')
+def interface_page_before_update(mapper, connection, target):
+    """界面页面更新前设置更新时间"""
     target.updatedAt = datetime.utcnow().isoformat()
 
 
-@event.listens_for(AppInstallation, 'before_update')
-def app_installation_before_update(mapper, connection, target):
-    """应用安装更新前设置更新时间"""
+@event.listens_for(InterfaceWidget, 'before_update')
+def interface_widget_before_update(mapper, connection, target):
+    """界面组件更新前设置更新时间"""
     target.updatedAt = datetime.utcnow().isoformat()
 
 
-@event.listens_for(ThirdPartyIntegration, 'before_update')
-def integration_before_update(mapper, connection, target):
-    """第三方集成更新前设置更新时间"""
+@event.listens_for(InterfaceTemplate, 'before_update')
+def interface_template_before_update(mapper, connection, target):
+    """界面模板更新前设置更新时间"""
+    target.updatedAt = datetime.utcnow().isoformat()
+
+
+@event.listens_for(InterfaceTheme, 'before_update')
+def interface_theme_before_update(mapper, connection, target):
+    """界面主题更新前设置更新时间"""
     target.updatedAt = datetime.utcnow().isoformat()

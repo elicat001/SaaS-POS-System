@@ -437,3 +437,247 @@ class FormSubmissionCreate(BaseModel):
     submitterName: Optional[str] = None
     submitterPhone: Optional[str] = None
 
+
+# ==================== 界面装修 Schemas ====================
+
+class InterfaceWidget(BaseModel):
+    id: str
+    pageId: str
+    widgetType: str
+    name: Optional[str] = None
+    props: dict
+    style: Optional[dict] = None
+    sortOrder: int
+    isVisible: bool
+    createdAt: Optional[str] = None
+    updatedAt: Optional[str] = None
+    model_config = ConfigDict(from_attributes=True)
+
+
+class InterfaceWidgetCreate(BaseModel):
+    widgetType: str
+    name: Optional[str] = None
+    props: dict
+    style: Optional[dict] = None
+    sortOrder: int = 0
+    isVisible: bool = True
+
+
+class InterfaceWidgetUpdate(BaseModel):
+    name: Optional[str] = None
+    props: Optional[dict] = None
+    style: Optional[dict] = None
+    sortOrder: Optional[int] = None
+    isVisible: Optional[bool] = None
+
+
+class InterfacePage(BaseModel):
+    id: str
+    pageType: str
+    name: str
+    description: Optional[str] = None
+    backgroundColor: str
+    backgroundImage: Optional[str] = None
+    isPublished: bool
+    publishedAt: Optional[str] = None
+    version: int
+    widgets: List[InterfaceWidget] = []
+    createdAt: Optional[str] = None
+    updatedAt: Optional[str] = None
+    model_config = ConfigDict(from_attributes=True)
+
+
+class InterfacePageCreate(BaseModel):
+    pageType: str
+    name: str
+    description: Optional[str] = None
+    backgroundColor: str = '#f8fafc'
+    backgroundImage: Optional[str] = None
+
+
+class InterfacePageUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    backgroundColor: Optional[str] = None
+    backgroundImage: Optional[str] = None
+
+
+class InterfacePagePublish(BaseModel):
+    publish: bool = True
+
+
+class InterfaceTemplate(BaseModel):
+    id: str
+    name: str
+    description: Optional[str] = None
+    thumbnail: Optional[str] = None
+    category: str
+    industry: Optional[str] = None
+    pageType: str
+    config: dict
+    isSystem: bool
+    useCount: int
+    createdAt: Optional[str] = None
+    model_config = ConfigDict(from_attributes=True)
+
+
+class InterfaceTemplateCreate(BaseModel):
+    name: str
+    description: Optional[str] = None
+    thumbnail: Optional[str] = None
+    category: str = 'custom'
+    industry: Optional[str] = None
+    pageType: str
+    config: dict
+
+
+class InterfaceTheme(BaseModel):
+    id: str
+    name: str
+    description: Optional[str] = None
+    primaryColor: str
+    secondaryColor: str
+    accentColor: str
+    textColor: str
+    backgroundColor: str
+    borderRadius: str
+    fontFamily: str
+    customCss: Optional[str] = None
+    isActive: bool
+    isSystem: bool
+    createdAt: Optional[str] = None
+    model_config = ConfigDict(from_attributes=True)
+
+
+class InterfaceThemeCreate(BaseModel):
+    name: str
+    description: Optional[str] = None
+    primaryColor: str = '#10b981'
+    secondaryColor: str = '#3b82f6'
+    accentColor: str = '#f59e0b'
+    textColor: str = '#1e293b'
+    backgroundColor: str = '#ffffff'
+    borderRadius: str = '8px'
+    fontFamily: str = 'system-ui'
+    customCss: Optional[str] = None
+
+
+class InterfaceThemeUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    primaryColor: Optional[str] = None
+    secondaryColor: Optional[str] = None
+    accentColor: Optional[str] = None
+    textColor: Optional[str] = None
+    backgroundColor: Optional[str] = None
+    borderRadius: Optional[str] = None
+    fontFamily: Optional[str] = None
+    customCss: Optional[str] = None
+    isActive: Optional[bool] = None
+
+
+class InterfaceHistory(BaseModel):
+    id: str
+    pageId: str
+    version: int
+    config: dict
+    operationType: str
+    operatorId: Optional[str] = None
+    operatorName: Optional[str] = None
+    description: Optional[str] = None
+    createdAt: Optional[str] = None
+    model_config = ConfigDict(from_attributes=True)
+
+
+class InterfaceNavBar(BaseModel):
+    id: str
+    name: str
+    backgroundColor: str
+    activeColor: str
+    inactiveColor: str
+    items: List[dict]
+    isActive: bool
+    createdAt: Optional[str] = None
+    model_config = ConfigDict(from_attributes=True)
+
+
+class InterfaceNavBarCreate(BaseModel):
+    name: str = '默认导航栏'
+    backgroundColor: str = '#ffffff'
+    activeColor: str = '#10b981'
+    inactiveColor: str = '#94a3b8'
+    items: List[dict]
+
+
+class InterfaceNavBarUpdate(BaseModel):
+    name: Optional[str] = None
+    backgroundColor: Optional[str] = None
+    activeColor: Optional[str] = None
+    inactiveColor: Optional[str] = None
+    items: Optional[List[dict]] = None
+    isActive: Optional[bool] = None
+
+
+class InterfacePopup(BaseModel):
+    id: str
+    name: str
+    popupType: str
+    title: Optional[str] = None
+    content: Optional[str] = None
+    imageUrl: Optional[str] = None
+    linkUrl: Optional[str] = None
+    linkType: Optional[str] = None
+    position: str
+    showOnce: bool
+    startTime: Optional[str] = None
+    endTime: Optional[str] = None
+    isActive: bool
+    triggerType: str
+    triggerValue: Optional[str] = None
+    createdAt: Optional[str] = None
+    model_config = ConfigDict(from_attributes=True)
+
+
+class InterfacePopupCreate(BaseModel):
+    name: str
+    popupType: str
+    title: Optional[str] = None
+    content: Optional[str] = None
+    imageUrl: Optional[str] = None
+    linkUrl: Optional[str] = None
+    linkType: Optional[str] = None
+    position: str = 'center'
+    showOnce: bool = True
+    startTime: Optional[str] = None
+    endTime: Optional[str] = None
+    triggerType: str = 'enter'
+    triggerValue: Optional[str] = None
+
+
+class InterfacePopupUpdate(BaseModel):
+    name: Optional[str] = None
+    popupType: Optional[str] = None
+    title: Optional[str] = None
+    content: Optional[str] = None
+    imageUrl: Optional[str] = None
+    linkUrl: Optional[str] = None
+    linkType: Optional[str] = None
+    position: Optional[str] = None
+    showOnce: Optional[bool] = None
+    startTime: Optional[str] = None
+    endTime: Optional[str] = None
+    isActive: Optional[bool] = None
+    triggerType: Optional[str] = None
+    triggerValue: Optional[str] = None
+
+
+class WidgetReorderRequest(BaseModel):
+    widgetIds: List[str]  # 按新顺序排列的widget ID列表
+
+
+class PageConfigSnapshot(BaseModel):
+    """页面配置快照，用于保存/恢复"""
+    backgroundColor: str
+    backgroundImage: Optional[str] = None
+    widgets: List[InterfaceWidgetCreate]
+

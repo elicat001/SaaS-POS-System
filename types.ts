@@ -119,172 +119,278 @@ export interface StockLog {
   note?: string;
 }
 
-// ==================== 应用中心类型 ====================
+// ==================== 界面装修类型 ====================
 
-export enum AppCategory {
-  BUILTIN = 'builtin',
-  INTEGRATION = 'integration'
-}
+export type WidgetType =
+  | 'SEARCH'
+  | 'BANNER'
+  | 'GRID_NAV'
+  | 'NOTICE'
+  | 'PRODUCT_FEED'
+  | 'TITLE'
+  | 'SPACER'
+  | 'STORE_INFO'
+  | 'MEMBER_CARD'
+  | 'COUPON'
+  | 'HOT_PRODUCTS'
+  | 'CATEGORY_NAV'
+  | 'FLASH_SALE'
+  | 'IMAGE'
+  | 'VIDEO'
+  | 'DIVIDER'
+  | 'RICH_TEXT'
+  | 'TABS'
+  | 'COUNTDOWN'
+  | 'MAP';
 
-export enum AppInstallationStatus {
-  ACTIVE = 'active',
-  DISABLED = 'disabled'
-}
-
-export interface App {
+export interface InterfaceWidget {
   id: string;
-  name: string;
-  description?: string;
-  icon: string;
-  category: AppCategory | string;
-  version: string;
-  isActive: boolean;
-  configSchema?: string;
-  route?: string;
-  createdAt?: string;
-}
-
-export interface AppInstallation {
-  id: string;
-  appId: string;
-  status: AppInstallationStatus | string;
-  config?: string;
+  pageId: string;
+  widgetType: WidgetType;
+  name?: string;
+  props: Record<string, unknown>;
+  style?: Record<string, unknown>;
+  sortOrder: number;
+  isVisible: boolean;
   createdAt?: string;
   updatedAt?: string;
-  app?: App;
 }
 
-export interface ThirdPartyIntegration {
+export interface InterfacePage {
   id: string;
-  platform: 'jd' | 'eleme' | 'meituan';
-  appKey?: string;
-  shopId?: string;
-  status: 'connected' | 'disconnected' | 'error';
-  lastSyncAt?: string;
-  errorMessage?: string;
-  createdAt?: string;
-}
-
-// ==================== 存酒管理类型 ====================
-
-export interface WineStorage {
-  id: string;
-  customerId: string;
-  customerName: string;
-  customerPhone: string;
-  wineName: string;
-  wineType?: string;
-  quantity: number;
-  unit: string;
-  storageDate: string;
-  expiryDate?: string;
-  status: 'stored' | 'retrieved' | 'expired';
-  notes?: string;
-  retrievedAt?: string;
-  retrievedQuantity?: number;
-  createdAt?: string;
-}
-
-// ==================== 评价管理类型 ====================
-
-export interface Review {
-  id: string;
-  orderId: string;
-  customerId?: string;
-  customerName?: string;
-  rating: number;
-  tasteRating?: number;
-  serviceRating?: number;
-  environmentRating?: number;
-  content?: string;
-  images?: string;
-  reply?: string;
-  repliedAt?: string;
-  isAnonymous: boolean;
-  status: 'visible' | 'hidden';
-  createdAt?: string;
-}
-
-// ==================== 排队管理类型 ====================
-
-export interface QueueTicket {
-  id: string;
-  ticketNo: string;
-  queueType: 'small' | 'medium' | 'large';
-  customerName?: string;
-  customerPhone: string;
-  partySize: number;
-  status: 'waiting' | 'called' | 'seated' | 'cancelled' | 'expired';
-  calledAt?: string;
-  seatedAt?: string;
-  tableId?: string;
-  estimatedWaitMinutes?: number;
-  notificationSent: boolean;
-  createdAt?: string;
-}
-
-// ==================== 发票管理类型 ====================
-
-export interface Invoice {
-  id: string;
-  orderId: string;
-  invoiceType: 'personal' | 'company';
-  titleType: 'general' | 'special';
-  title: string;
-  taxNumber?: string;
-  companyAddress?: string;
-  companyPhone?: string;
-  bankName?: string;
-  bankAccount?: string;
-  amount: number;
-  email?: string;
-  status: 'pending' | 'issued' | 'rejected' | 'cancelled';
-  invoiceNo?: string;
-  invoiceUrl?: string;
-  issuedAt?: string;
-  rejectedReason?: string;
-  createdAt?: string;
-}
-
-// ==================== WiFi配置类型 ====================
-
-export interface StoreWifiConfig {
-  id: string;
-  ssid: string;
-  password?: string;
-  encryptionType: 'OPEN' | 'WEP' | 'WPA' | 'WPA2';
-  isDefault: boolean;
+  pageType: 'home' | 'user' | 'order' | 'category' | 'product_detail';
+  name: string;
   description?: string;
+  backgroundColor: string;
+  backgroundImage?: string;
+  isPublished: boolean;
+  publishedAt?: string;
+  version: number;
+  widgets: InterfaceWidget[];
   createdAt?: string;
+  updatedAt?: string;
 }
 
-// ==================== 表单工具类型 ====================
-
-export interface FormField {
-  id: string;
-  type: 'text' | 'textarea' | 'select' | 'radio' | 'checkbox' | 'date' | 'phone' | 'email';
-  label: string;
-  placeholder?: string;
-  required?: boolean;
-  options?: string[];
-}
-
-export interface FormTemplate {
+export interface InterfaceTemplate {
   id: string;
   name: string;
   description?: string;
-  fields: string;
-  status: 'active' | 'inactive';
-  submissionCount: number;
+  thumbnail?: string;
+  category: 'official' | 'custom' | 'industry';
+  industry?: string;
+  pageType: string;
+  config: PageConfigSnapshot;
+  isSystem: boolean;
+  useCount: number;
   createdAt?: string;
 }
 
-export interface FormSubmission {
+export interface InterfaceTheme {
   id: string;
-  templateId: string;
-  data: string;
-  submitterName?: string;
-  submitterPhone?: string;
-  submitterIp?: string;
+  name: string;
+  description?: string;
+  primaryColor: string;
+  secondaryColor: string;
+  accentColor: string;
+  textColor: string;
+  backgroundColor: string;
+  borderRadius: string;
+  fontFamily: string;
+  customCss?: string;
+  isActive: boolean;
+  isSystem: boolean;
   createdAt?: string;
+}
+
+export interface InterfaceHistory {
+  id: string;
+  pageId: string;
+  version: number;
+  config: PageConfigSnapshot;
+  operationType: 'create' | 'update' | 'publish' | 'restore';
+  operatorId?: string;
+  operatorName?: string;
+  description?: string;
+  createdAt?: string;
+}
+
+export interface InterfaceNavBarItem {
+  icon: string;
+  label: string;
+  path: string;
+  badge?: boolean;
+}
+
+export interface InterfaceNavBar {
+  id: string;
+  name: string;
+  backgroundColor: string;
+  activeColor: string;
+  inactiveColor: string;
+  items: InterfaceNavBarItem[];
+  isActive: boolean;
+  createdAt?: string;
+}
+
+export interface InterfacePopup {
+  id: string;
+  name: string;
+  popupType: 'coupon' | 'activity' | 'announcement' | 'custom';
+  title?: string;
+  content?: string;
+  imageUrl?: string;
+  linkUrl?: string;
+  linkType?: 'page' | 'product' | 'category' | 'external';
+  position: 'center' | 'bottom' | 'top';
+  showOnce: boolean;
+  startTime?: string;
+  endTime?: string;
+  isActive: boolean;
+  triggerType: 'enter' | 'scroll' | 'delay' | 'exit';
+  triggerValue?: string;
+  createdAt?: string;
+}
+
+export interface PageConfigSnapshot {
+  backgroundColor: string;
+  backgroundImage?: string;
+  widgets: Array<{
+    widgetType: WidgetType;
+    name?: string;
+    props: Record<string, unknown>;
+    style?: Record<string, unknown>;
+    sortOrder: number;
+    isVisible: boolean;
+  }>;
+}
+
+// 组件默认属性类型
+export interface SearchWidgetProps {
+  placeholder: string;
+  style: 'ROUNDED' | 'SQUARE';
+  background: string;
+  showIcon: boolean;
+}
+
+export interface BannerWidgetProps {
+  height: number;
+  images: Array<{
+    url: string;
+    link?: string;
+    linkType?: string;
+  }>;
+  autoPlay: boolean;
+  interval: number;
+  indicatorType: 'dots' | 'number' | 'none';
+}
+
+export interface GridNavWidgetProps {
+  cols: 3 | 4 | 5;
+  rows: number;
+  items: Array<{
+    icon: string;
+    label: string;
+    color: string;
+    link?: string;
+    linkType?: string;
+  }>;
+  background: string;
+  iconSize: number;
+}
+
+export interface NoticeWidgetProps {
+  text: string;
+  speed: number;
+  background: string;
+  textColor: string;
+  showIcon: boolean;
+  link?: string;
+}
+
+export interface ProductFeedWidgetProps {
+  title?: string;
+  mode: 'SINGLE' | 'DOUBLE' | 'LIST' | 'SCROLL';
+  source: 'recommend' | 'hot' | 'new' | 'category' | 'custom';
+  categoryId?: string;
+  productIds?: string[];
+  limit: number;
+  showPrice: boolean;
+  showSales: boolean;
+  showCart: boolean;
+}
+
+export interface TitleWidgetProps {
+  text: string;
+  align: 'left' | 'center' | 'right';
+  size: string;
+  color: string;
+  bold: boolean;
+  showMore: boolean;
+  moreLink?: string;
+}
+
+export interface SpacerWidgetProps {
+  height: number;
+  background: string;
+}
+
+export interface StoreInfoWidgetProps {
+  showLogo: boolean;
+  showName: boolean;
+  showAddress: boolean;
+  showPhone: boolean;
+  showHours: boolean;
+  style: 'card' | 'simple';
+}
+
+export interface MemberCardWidgetProps {
+  background: string;
+  showAvatar: boolean;
+  showLevel: boolean;
+  showPoints: boolean;
+  showBalance: boolean;
+  style: 'card' | 'banner';
+}
+
+export interface CouponWidgetProps {
+  title?: string;
+  mode: 'scroll' | 'grid';
+  source: 'available' | 'new' | 'custom';
+  couponIds?: string[];
+  limit: number;
+}
+
+export interface ImageWidgetProps {
+  url: string;
+  mode: 'aspectFit' | 'aspectFill' | 'widthFix';
+  link?: string;
+  linkType?: string;
+  radius: number;
+}
+
+export interface VideoWidgetProps {
+  url: string;
+  poster?: string;
+  autoPlay: boolean;
+  loop: boolean;
+  muted: boolean;
+}
+
+export interface RichTextWidgetProps {
+  content: string;
+  padding: number;
+}
+
+export interface CountdownWidgetProps {
+  title: string;
+  endTime: string;
+  background: string;
+  textColor: string;
+  style: 'simple' | 'card';
+}
+
+export interface DividerWidgetProps {
+  style: 'solid' | 'dashed' | 'dotted';
+  color: string;
+  margin: number;
 }

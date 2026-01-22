@@ -9,7 +9,6 @@ import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { NotificationProvider } from './contexts/NotificationContext';
 import { AppProvider, useApp } from './contexts/AppContext';
-import { AppCenterProvider } from './contexts/AppCenterContext';
 
 // Layout Components
 import Sidebar from './components/Sidebar';
@@ -49,19 +48,6 @@ import ConfigDevConfig from './components/ConfigDevConfig';
 
 // Other Components
 import Marketing from './components/Marketing';
-import AppCenter from './components/AppCenter';
-
-// App Center Sub-Apps
-import KitchenDisplay from './components/apps/KitchenDisplay';
-import QueueSystem from './components/apps/QueueSystem';
-import WineStorageApp from './components/apps/WineStorageApp';
-import ReviewsApp from './components/apps/ReviewsApp';
-import InvoiceApp from './components/apps/InvoiceApp';
-import WifiConfigApp from './components/apps/WifiConfigApp';
-import FormBuilderApp from './components/apps/FormBuilderApp';
-import PhoneVerifyApp from './components/apps/PhoneVerifyApp';
-import ExpiryPrintApp from './components/apps/ExpiryPrintApp';
-import LogisticsApp from './components/apps/LogisticsApp';
 
 // UI Components
 import { PageLoading } from './components/ui/Loading';
@@ -319,73 +305,6 @@ const AppRoutes: React.FC = () => {
         </ProtectedRoute>
       } />
 
-      <Route path="/apps" element={
-        <ProtectedRoute>
-          <MainLayout><AppCenter /></MainLayout>
-        </ProtectedRoute>
-      } />
-
-      {/* 应用中心子应用路由 */}
-      <Route path="/apps/kds" element={
-        <ProtectedRoute>
-          <MainLayout><KitchenDisplay /></MainLayout>
-        </ProtectedRoute>
-      } />
-
-      <Route path="/apps/queue" element={
-        <ProtectedRoute>
-          <MainLayout><QueueSystem /></MainLayout>
-        </ProtectedRoute>
-      } />
-
-      <Route path="/apps/wine-storage" element={
-        <ProtectedRoute>
-          <MainLayout><WineStorageApp /></MainLayout>
-        </ProtectedRoute>
-      } />
-
-      <Route path="/apps/reviews" element={
-        <ProtectedRoute>
-          <MainLayout><ReviewsApp /></MainLayout>
-        </ProtectedRoute>
-      } />
-
-      <Route path="/apps/invoice" element={
-        <ProtectedRoute>
-          <MainLayout><InvoiceApp /></MainLayout>
-        </ProtectedRoute>
-      } />
-
-      <Route path="/apps/wifi" element={
-        <ProtectedRoute>
-          <MainLayout><WifiConfigApp /></MainLayout>
-        </ProtectedRoute>
-      } />
-
-      <Route path="/apps/forms" element={
-        <ProtectedRoute>
-          <MainLayout><FormBuilderApp /></MainLayout>
-        </ProtectedRoute>
-      } />
-
-      <Route path="/apps/phone-verify" element={
-        <ProtectedRoute>
-          <MainLayout><PhoneVerifyApp /></MainLayout>
-        </ProtectedRoute>
-      } />
-
-      <Route path="/apps/expiry-print" element={
-        <ProtectedRoute>
-          <MainLayout><ExpiryPrintApp /></MainLayout>
-        </ProtectedRoute>
-      } />
-
-      <Route path="/apps/logistics" element={
-        <ProtectedRoute>
-          <MainLayout><LogisticsApp /></MainLayout>
-        </ProtectedRoute>
-      } />
-
       {/* 分类设置 */}
       <Route path="/categories" element={
         <ProtectedRoute>
@@ -419,9 +338,7 @@ const App: React.FC = () => {
       <NotificationProvider>
         <AuthProvider>
           <AppProvider>
-            <AppCenterProvider>
-              <AppRoutes />
-            </AppCenterProvider>
+            <AppRoutes />
           </AppProvider>
         </AuthProvider>
       </NotificationProvider>

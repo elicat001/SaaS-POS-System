@@ -587,229 +587,75 @@ export const aiApi = {
     http.post<{ description: string }>('/ai/product-description', { productName }),
 };
 
-// ==================== 应用中心API ====================
+// ==================== 界面装修API ====================
 
-interface App {
-  id: string;
-  name: string;
-  description?: string;
-  icon: string;
-  category: string;
-  version: string;
-  isActive: boolean;
-  configSchema?: string;
-  route?: string;
-  createdAt?: string;
-}
+import type {
+  InterfacePage, InterfaceWidget, InterfaceTemplate, InterfaceTheme,
+  InterfaceHistory, InterfaceNavBar, InterfacePopup, PageConfigSnapshot
+} from '../types';
 
-interface AppInstallation {
-  id: string;
-  appId: string;
-  status: string;
-  config?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  app?: App;
-}
+export const interfaceApi = {
+  // 页面管理
+  listPages: () => http.get<InterfacePage[]>('/interface/pages'),
+  getPage: (pageId: string) => http.get<InterfacePage>(`/interface/pages/${pageId}`),
+  getPageByType: (pageType: string) => http.get<InterfacePage>(`/interface/pages/type/${pageType}`),
+  createPage: (data: { pageType: string; name: string; description?: string; backgroundColor?: string }) =>
+    http.post<InterfacePage>('/interface/pages', data),
+  updatePage: (pageId: string, data: { name?: string; description?: string; backgroundColor?: string; backgroundImage?: string }) =>
+    http.put<InterfacePage>(`/interface/pages/${pageId}`, data),
+  publishPage: (pageId: string) => http.post<{ message: string; version: number }>(`/interface/pages/${pageId}/publish`),
 
-interface ThirdPartyIntegration {
-  id: string;
-  platform: string;
-  appKey?: string;
-  shopId?: string;
-  status: string;
-  lastSyncAt?: string;
-  errorMessage?: string;
-  createdAt?: string;
-}
+  // 组件管理
+  addWidget: (pageId: string, data: { widgetType: string; name?: string; props: Record<string, unknown>; style?: Record<string, unknown>; sortOrder?: number }) =>
+    http.post<InterfaceWidget>(`/interface/pages/${pageId}/widgets`, data),
+  updateWidget: (widgetId: string, data: { name?: string; props?: Record<string, unknown>; style?: Record<string, unknown>; sortOrder?: number; isVisible?: boolean }) =>
+    http.put<InterfaceWidget>(`/interface/widgets/${widgetId}`, data),
+  deleteWidget: (widgetId: string) => http.delete(`/interface/widgets/${widgetId}`),
+  reorderWidgets: (pageId: string, widgetIds: string[]) =>
+    http.post(`/interface/pages/${pageId}/widgets/reorder`, { widgetIds }),
 
-interface WineStorage {
-  id: string;
-  customerId: string;
-  customerName: string;
-  customerPhone: string;
-  wineName: string;
-  wineType?: string;
-  quantity: number;
-  unit: string;
-  storageDate: string;
-  expiryDate?: string;
-  status: string;
-  notes?: string;
-  retrievedAt?: string;
-  retrievedQuantity?: number;
-  createdAt?: string;
-}
+  // 模板管理
+  listTemplates: (params?: { category?: string; industry?: string; pageType?: string }) => {
+    const query = new URLSearchParams();
+    if (params?.category) query.append('category', params.category);
+    if (params?.industry) query.append('industry', params.industry);
+    if (params?.pageType) query.append('page_type', params.pageType);
+    const queryStr = query.toString();
+    return http.get<InterfaceTemplate[]>(`/interface/templates${queryStr ? `?${queryStr}` : ''}`);
+  },
+  createTemplate: (data: { name: string; description?: string; thumbnail?: string; category?: string; industry?: string; pageType: string; config: PageConfigSnapshot }) =>
+    http.post<InterfaceTemplate>('/interface/templates', data),
+  deleteTemplate: (templateId: string) => http.delete(`/interface/templates/${templateId}`),
+  applyTemplate: (pageId: string, templateId: string) =>
+    http.post(`/interface/pages/${pageId}/apply-template/${templateId}`),
 
-interface Review {
-  id: string;
-  orderId: string;
-  customerId?: string;
-  customerName?: string;
-  rating: number;
-  tasteRating?: number;
-  serviceRating?: number;
-  environmentRating?: number;
-  content?: string;
-  images?: string;
-  reply?: string;
-  repliedAt?: string;
-  isAnonymous: boolean;
-  status: string;
-  createdAt?: string;
-}
+  // 主题管理
+  listThemes: () => http.get<InterfaceTheme[]>('/interface/themes'),
+  getActiveTheme: () => http.get<InterfaceTheme>('/interface/themes/active'),
+  createTheme: (data: { name: string; description?: string; primaryColor?: string; secondaryColor?: string; accentColor?: string; textColor?: string; backgroundColor?: string; borderRadius?: string; fontFamily?: string; customCss?: string }) =>
+    http.post<InterfaceTheme>('/interface/themes', data),
+  updateTheme: (themeId: string, data: Partial<InterfaceTheme>) =>
+    http.put<InterfaceTheme>(`/interface/themes/${themeId}`, data),
+  activateTheme: (themeId: string) => http.post(`/interface/themes/${themeId}/activate`),
+  deleteTheme: (themeId: string) => http.delete(`/interface/themes/${themeId}`),
 
-interface QueueTicket {
-  id: string;
-  ticketNo: string;
-  queueType: string;
-  customerName?: string;
-  customerPhone: string;
-  partySize: number;
-  status: string;
-  calledAt?: string;
-  seatedAt?: string;
-  tableId?: string;
-  estimatedWaitMinutes?: number;
-  notificationSent: boolean;
-  createdAt?: string;
-}
+  // 历史版本
+  getPageHistory: (pageId: string) => http.get<InterfaceHistory[]>(`/interface/pages/${pageId}/history`),
+  restorePageVersion: (pageId: string, historyId: string) =>
+    http.post(`/interface/pages/${pageId}/restore/${historyId}`),
 
-interface Invoice {
-  id: string;
-  orderId: string;
-  invoiceType: string;
-  titleType: string;
-  title: string;
-  taxNumber?: string;
-  amount: number;
-  email?: string;
-  status: string;
-  invoiceNo?: string;
-  invoiceUrl?: string;
-  createdAt?: string;
-}
+  // 导航栏
+  getNavbar: () => http.get<InterfaceNavBar>('/interface/navbar'),
+  updateNavbar: (data: { name?: string; backgroundColor?: string; activeColor?: string; inactiveColor?: string; items?: Array<{ icon: string; label: string; path: string; badge?: boolean }> }) =>
+    http.put<InterfaceNavBar>('/interface/navbar', data),
 
-interface StoreWifiConfig {
-  id: string;
-  ssid: string;
-  password?: string;
-  encryptionType: string;
-  isDefault: boolean;
-  description?: string;
-  createdAt?: string;
-}
-
-interface FormTemplate {
-  id: string;
-  name: string;
-  description?: string;
-  fields: string;
-  status: string;
-  submissionCount: number;
-  createdAt?: string;
-}
-
-interface FormSubmission {
-  id: string;
-  templateId: string;
-  data: string;
-  submitterName?: string;
-  submitterPhone?: string;
-  createdAt?: string;
-}
-
-export const appApi = {
-  // 应用管理
-  listApps: () => http.get<App[]>('/apps/'),
-  listInstalled: () => http.get<AppInstallation[]>('/apps/installed'),
-  getApp: (appId: string) => http.get<App>(`/apps/${appId}`),
-  install: (appId: string, config?: Record<string, unknown>) =>
-    http.post<AppInstallation>('/apps/install', { appId, config }),
-  uninstall: (installationId: string) => http.delete(`/apps/${installationId}`),
-  updateConfig: (installationId: string, config: Record<string, unknown>) =>
-    http.put<AppInstallation>(`/apps/${installationId}/config`, { config }),
-  toggle: (installationId: string, status: 'active' | 'disabled') =>
-    http.put<AppInstallation>(`/apps/${installationId}/toggle`, { status }),
-
-  // 存酒管理
-  listWineStorage: (status?: string) =>
-    http.get<WineStorage[]>(`/apps/wine-storage/list${status ? `?status=${status}` : ''}`),
-  getWineStorage: (wineId: string) => http.get<WineStorage>(`/apps/wine-storage/${wineId}`),
-  createWineStorage: (data: Omit<WineStorage, 'id' | 'status' | 'createdAt' | 'retrievedAt' | 'retrievedQuantity'>) =>
-    http.post<WineStorage>('/apps/wine-storage', data),
-  retrieveWine: (wineId: string, quantity: number, notes?: string) =>
-    http.post<WineStorage>(`/apps/wine-storage/${wineId}/retrieve`, { quantity, notes }),
-
-  // 评价管理
-  listReviews: (status?: string) =>
-    http.get<Review[]>(`/apps/reviews/list${status ? `?status=${status}` : ''}`),
-  getReview: (reviewId: string) => http.get<Review>(`/apps/reviews/${reviewId}`),
-  createReview: (data: { orderId: string; rating: number; content?: string; images?: string[]; isAnonymous?: boolean }) =>
-    http.post<Review>('/apps/reviews', data),
-  replyReview: (reviewId: string, reply: string) =>
-    http.post<Review>(`/apps/reviews/${reviewId}/reply`, { reply }),
-  toggleReviewVisibility: (reviewId: string, status: 'visible' | 'hidden') =>
-    http.put(`/apps/reviews/${reviewId}/visibility?status=${status}`),
-
-  // 排队管理
-  listQueueTickets: (status?: string) =>
-    http.get<QueueTicket[]>(`/apps/queue/list${status ? `?status=${status}` : ''}`),
-  getQueueTicket: (ticketId: string) => http.get<QueueTicket>(`/apps/queue/${ticketId}`),
-  createQueueTicket: (data: { queueType: string; customerName?: string; customerPhone: string; partySize: number }) =>
-    http.post<QueueTicket>('/apps/queue', data),
-  callQueueTicket: (ticketId: string) => http.post<QueueTicket>(`/apps/queue/${ticketId}/call`),
-  seatQueueTicket: (ticketId: string, tableId: string) =>
-    http.post(`/apps/queue/${ticketId}/seat?table_id=${tableId}`),
-  cancelQueueTicket: (ticketId: string) => http.post(`/apps/queue/${ticketId}/cancel`),
-
-  // 发票管理
-  listInvoices: (status?: string) =>
-    http.get<Invoice[]>(`/apps/invoices/list${status ? `?status=${status}` : ''}`),
-  getInvoice: (invoiceId: string) => http.get<Invoice>(`/apps/invoices/${invoiceId}`),
-  createInvoice: (data: { orderId: string; invoiceType: string; titleType: string; title: string; taxNumber?: string; amount: number; email?: string }) =>
-    http.post<Invoice>('/apps/invoices', data),
-  issueInvoice: (invoiceId: string, invoiceNo: string, invoiceUrl?: string) =>
-    http.post<Invoice>(`/apps/invoices/${invoiceId}/issue`, { invoiceNo, invoiceUrl }),
-  rejectInvoice: (invoiceId: string, reason: string) =>
-    http.post<Invoice>(`/apps/invoices/${invoiceId}/reject`, { reason }),
-
-  // WiFi配置
-  listWifiConfigs: () => http.get<StoreWifiConfig[]>('/apps/wifi/list'),
-  createWifiConfig: (data: { ssid: string; password?: string; encryptionType?: string; isDefault?: boolean; description?: string }) =>
-    http.post<StoreWifiConfig>('/apps/wifi', data),
-  updateWifiConfig: (wifiId: string, data: { ssid: string; password?: string; encryptionType?: string; isDefault?: boolean; description?: string }) =>
-    http.put<StoreWifiConfig>(`/apps/wifi/${wifiId}`, data),
-  deleteWifiConfig: (wifiId: string) => http.delete(`/apps/wifi/${wifiId}`),
-
-  // 表单工具
-  listFormTemplates: () => http.get<FormTemplate[]>('/apps/forms/templates'),
-  getFormTemplate: (templateId: string) => http.get<FormTemplate>(`/apps/forms/templates/${templateId}`),
-  createFormTemplate: (data: { name: string; description?: string; fields: unknown[] }) =>
-    http.post<FormTemplate>('/apps/forms/templates', data),
-  updateFormTemplate: (templateId: string, data: { name: string; description?: string; fields: unknown[] }) =>
-    http.put<FormTemplate>(`/apps/forms/templates/${templateId}`, data),
-  deleteFormTemplate: (templateId: string) => http.delete(`/apps/forms/templates/${templateId}`),
-  listFormSubmissions: (templateId: string) =>
-    http.get<FormSubmission[]>(`/apps/forms/templates/${templateId}/submissions`),
-  submitForm: (data: { templateId: string; data: Record<string, unknown>; submitterName?: string; submitterPhone?: string }) =>
-    http.post<FormSubmission>('/apps/forms/submit', data),
-};
-
-// ==================== 第三方集成API ====================
-
-export const integrationApi = {
-  list: () => http.get<ThirdPartyIntegration[]>('/integrations/'),
-  get: (platform: string) => http.get<ThirdPartyIntegration>(`/integrations/${platform}`),
-  create: (data: { platform: string; appKey?: string; appSecret?: string; shopId?: string }) =>
-    http.post<ThirdPartyIntegration>('/integrations/', data),
-  update: (integrationId: string, data: { appKey?: string; appSecret?: string; shopId?: string; status?: string }) =>
-    http.put<ThirdPartyIntegration>(`/integrations/${integrationId}`, data),
-  delete: (integrationId: string) => http.delete(`/integrations/${integrationId}`),
-  connect: (platform: string) => http.post<{ ok: boolean; message: string }>(`/integrations/${platform}/connect`),
-  disconnect: (platform: string) => http.post<{ ok: boolean; message: string }>(`/integrations/${platform}/disconnect`),
-  sync: (platform: string, syncType?: string) =>
-    http.post<{ ok: boolean; message: string; syncType: string; syncedAt: string }>(`/integrations/${platform}/sync${syncType ? `?sync_type=${syncType}` : ''}`),
+  // 弹窗管理
+  listPopups: () => http.get<InterfacePopup[]>('/interface/popups'),
+  createPopup: (data: { name: string; popupType: string; title?: string; content?: string; imageUrl?: string; linkUrl?: string; position?: string; showOnce?: boolean; triggerType?: string }) =>
+    http.post<InterfacePopup>('/interface/popups', data),
+  updatePopup: (popupId: string, data: Partial<InterfacePopup>) =>
+    http.put<InterfacePopup>(`/interface/popups/${popupId}`, data),
+  deletePopup: (popupId: string) => http.delete(`/interface/popups/${popupId}`),
 };
 
 // 导出Token管理器供外部使用
@@ -828,6 +674,5 @@ export default {
   inventory: inventoryApi,
   analytics: analyticsApi,
   ai: aiApi,
-  apps: appApi,
-  integrations: integrationApi,
+  interface: interfaceApi,
 };
