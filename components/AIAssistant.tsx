@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Sparkles, Bot, Send } from 'lucide-react';
-import { generateBusinessInsight } from '../services/geminiService';
+import { Sparkles, Bot } from 'lucide-react';
+import { aiApi } from '../services/api';
 import { Order } from '../types';
 
 interface AIAssistantProps {
@@ -10,18 +10,27 @@ interface AIAssistantProps {
 const AIAssistant: React.FC<AIAssistantProps> = ({ orders }) => {
   const [loading, setLoading] = useState(false);
   const [insight, setInsight] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleGenerateInsight = async () => {
     setLoading(true);
+    setError(null);
+
     const salesData = {
       totalOrders: orders.length,
       totalRevenue: orders.reduce((sum, o) => sum + o.total, 0),
       averageOrderValue: orders.length > 0 ? (orders.reduce((sum, o) => sum + o.total, 0) / orders.length) : 0,
     };
-    
-    const result = await generateBusinessInsight(salesData, orders);
-    setInsight(result);
-    setLoading(false);
+
+    try {
+      const result = await aiApi.generateInsight(salesData, orders.slice(0, 20));
+      setInsight(result.insight);
+    } catch (e) {
+      setError('AI 分析服务暂不可用，请稍后再试');
+      console.error('AI insight error:', e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -69,7 +78,12 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ orders }) => {
             </h3>
             
             <div className="bg-slate-50 rounded-xl p-6 h-64 overflow-y-auto border border-slate-100">
-              {insight ? (
+              {error ? (
+                <div className="h-full flex flex-col items-center justify-center text-red-400 text-center">
+                  <Bot size={32} className="mb-2 opacity-50" />
+                  <p className="text-sm">{error}</p>
+                </div>
+              ) : insight ? (
                 <div className="prose prose-sm prose-slate">
                   <div className="whitespace-pre-line text-slate-700 leading-relaxed">
                     {insight}
@@ -78,7 +92,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ orders }) => {
               ) : (
                 <div className="h-full flex flex-col items-center justify-center text-slate-400 text-center">
                   <Bot size={32} className="mb-2 opacity-20" />
-                  <p className="text-sm">No analysis generated yet.<br/>Click the button to start.</p>
+                  <p className="text-sm">暂无分析结果<br/>点击按钮开始分析</p>
                 </div>
               )}
             </div>
