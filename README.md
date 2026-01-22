@@ -1,185 +1,199 @@
 # SaaS POS System
 
-一个功能完整的餐饮SaaS POS系统，包含前端(React)和后端(FastAPI)。
+一个现代化的餐饮 SaaS POS 系统，采用 React + FastAPI 全栈架构，提供完整的收银、库存、会员、数据分析等功能。
 
-## 功能特性
+## 功能概览
 
-- **POS收银系统** - 完整的点餐、下单、支付流程
-- **库存管理** - 商品库存追踪、低库存预警、出入库记录
-- **桌台管理** - 餐桌状态管理、预订系统
-- **数据分析** - 销售报表、利润分析、趋势图表
-- **用户管理** - 会员系统、积分余额
-- **AI智能分析** - 基于Gemini的业务洞察（可选）
-- **系统配置** - 小程序、打印机、支付等配置
+### 核心功能
+
+| 模块 | 功能描述 |
+|------|----------|
+| **POS 收银** | 点餐下单、多种支付方式、订单管理、小票打印 |
+| **商品管理** | 分类管理、商品 CRUD、批量操作、图片上传 |
+| **库存管理** | 库存追踪、出入库记录、低库存预警、供应商管理 |
+| **桌台管理** | 餐桌状态、二维码桌码、预约订座 |
+| **会员系统** | 会员管理、积分余额、等级体系 |
+| **数据分析** | 销售报表、利润分析、趋势图表、TOP 商品 |
+| **系统配置** | 小程序设置、打印机配置、第三方配送对接 |
+
+### 界面装修系统
+
+可视化拖拽式小程序界面配置：
+
+- **18 种组件类型** - 搜索框、轮播图、金刚区、商品列表、会员卡片等
+- **多页面支持** - 首页、会员中心、订单页、分类页独立配置
+- **拖拽排序** - 直观的组件顺序调整
+- **实时预览** - 375px 手机端预览效果
+- **模板系统** - 保存/应用页面模板
+- **主题管理** - 全局配色方案
+- **版本历史** - 配置回滚、撤销/重做
 
 ## 技术栈
 
 ### 前端
-- React 19 + TypeScript
-- Vite (构建工具)
-- React Router DOM (路由)
-- Tailwind CSS (样式)
-- Recharts (图表)
-- Lucide React (图标)
+
+```
+React 19 + TypeScript
+├── Vite          # 构建工具
+├── React Router  # 路由管理
+├── Tailwind CSS  # 原子化样式
+├── Recharts      # 数据可视化
+└── Lucide        # 图标库
+```
 
 ### 后端
-- FastAPI (Web框架)
-- SQLAlchemy + SQLite (ORM/数据库)
-- Pydantic (数据验证)
-- Uvicorn (ASGI服务器)
+
+```
+FastAPI + Python 3.10+
+├── SQLAlchemy    # ORM
+├── SQLite        # 数据库
+├── Pydantic v2   # 数据验证
+└── Uvicorn       # ASGI 服务器
+```
 
 ## 快速开始
 
-### 前提条件
+### 环境要求
+
 - Node.js >= 18
 - Python >= 3.10
 
-### 安装依赖
+### 安装
 
 ```bash
-# 前端依赖
+# 克隆项目
+git clone https://github.com/elicat001/SaaS-POS-System.git
+cd SaaS-POS-System
+
+# 安装前端依赖
 npm install
 
-# 后端依赖
+# 安装后端依赖
 pip install -r requirements.txt
 ```
 
-### 启动服务
-
-**方式一：同时启动前后端**
+### 启动
 
 ```bash
-# 终端1 - 启动后端
+# 终端 1 - 启动后端 (端口 8000)
 npm run backend
-# 或者
-cd backend && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+# 或
+cd backend && uvicorn app.main:app --reload --port 8000
 
-# 终端2 - 启动前端
+# 终端 2 - 启动前端 (端口 3000)
 npm run dev
 ```
 
-**方式二：仅前端（使用Mock数据）**
+### 访问
 
-```bash
-npm run dev
+| 服务 | 地址 |
+|------|------|
+| 前端应用 | http://localhost:3000 |
+| 后端 API | http://localhost:8000 |
+| API 文档 | http://localhost:8000/docs |
+
+### 默认账户
+
 ```
-
-### 访问应用
-
-- 前端: http://localhost:3000
-- 后端API: http://localhost:8000
-- API文档: http://localhost:8000/docs
-
-### 默认登录账户
-
-- 用户名: `admin`
-- 密码: `admin123`
+用户名: admin
+密码: admin123
+```
 
 ## 项目结构
 
 ```
-├── App.tsx                 # 应用主入口
-├── types.ts                # TypeScript类型定义
-├── constants.ts            # 常量和Mock数据
-├── vite.config.ts          # Vite配置
+SaaS-POS-System/
+├── App.tsx                    # 应用入口、路由配置
+├── types.ts                   # TypeScript 类型定义
+├── vite.config.ts             # Vite 配置
 │
-├── components/             # React组件
-│   ├── Login.tsx          # 登录页
-│   ├── Dashboard.tsx      # 数据仪表板
-│   ├── POS.tsx            # POS收银
-│   ├── InventoryManagement.tsx  # 库存管理
-│   ├── TableManagement.tsx      # 桌台管理
-│   ├── ProtectedRoute.tsx # 路由保护
-│   ├── ui/                # UI组件
-│   │   ├── Loading.tsx    # 加载组件
-│   │   └── Skeleton.tsx   # 骨架屏
-│   └── Config*.tsx        # 配置页面
+├── components/                # React 组件
+│   ├── Login.tsx              # 登录页
+│   ├── Dashboard.tsx          # 数据仪表板
+│   ├── POS.tsx                # POS 收银台
+│   ├── ProductList.tsx        # 商品列表
+│   ├── OrderList.tsx          # 订单列表
+│   ├── InventoryManagement.tsx # 库存管理
+│   ├── TableManagement.tsx    # 桌台管理
+│   ├── UserList.tsx           # 会员管理
+│   ├── ConfigInterfaceSettings.tsx  # 界面装修
+│   ├── Config*.tsx            # 其他配置页
+│   └── ui/                    # 通用 UI 组件
+│       ├── Loading.tsx
+│       └── Skeleton.tsx
 │
-├── contexts/               # React Context
-│   ├── AuthContext.tsx    # 认证状态
-│   ├── AppContext.tsx     # 应用状态
-│   └── NotificationContext.tsx  # 通知系统
+├── contexts/                  # React Context
+│   ├── AuthContext.tsx        # 认证状态管理
+│   ├── AppContext.tsx         # 业务数据管理
+│   └── NotificationContext.tsx # 全局通知
 │
-├── services/               # 服务层
-│   └── api.ts             # API调用封装
+├── services/
+│   └── api.ts                 # API 服务封装
 │
-├── tests/                  # 测试文件
-│   ├── setup.ts           # 测试配置
-│   ├── services/          # 服务测试
-│   └── contexts/          # Context测试
-│
-└── backend/               # 后端代码
+└── backend/                   # FastAPI 后端
     └── app/
-        ├── main.py        # FastAPI入口
-        ├── models.py      # 数据库模型
-        ├── schemas.py     # Pydantic模式
-        ├── crud.py        # CRUD操作
-        ├── database.py    # 数据库配置
-        └── routers/       # API路由
-            ├── auth.py    # 认证API
-            ├── products.py
-            ├── orders.py
+        ├── main.py            # 应用入口
+        ├── models.py          # 数据库模型
+        ├── schemas.py         # Pydantic 模式
+        ├── crud.py            # CRUD 操作
+        ├── database.py        # 数据库配置
+        └── routers/           # API 路由
+            ├── auth.py        # 认证
+            ├── products.py    # 商品
+            ├── orders.py      # 订单
+            ├── tables.py      # 桌台
+            ├── users.py       # 用户
+            ├── inventory.py   # 库存
+            ├── analytics.py   # 数据分析
+            ├── interface.py   # 界面装修
             └── ...
 ```
 
-## 主要优化
+## API 接口
 
-### 1. 前后端集成
-- 创建了统一的API服务层 (`services/api.ts`)
-- 支持请求/响应拦截、错误处理、自动重试
-- Token自动管理和刷新
+### 认证
 
-### 2. 认证授权
-- JWT Token认证系统
-- 基于角色的权限控制 (RBAC)
-- 路由保护组件
+| 方法 | 端点 | 描述 |
+|------|------|------|
+| POST | `/api/auth/login` | 用户登录 |
+| POST | `/api/auth/logout` | 用户登出 |
+| GET | `/api/auth/me` | 获取当前用户 |
 
-### 3. 状态管理
-- 使用React Context API替代props drilling
-- AuthContext - 认证状态
-- AppContext - 业务数据
-- NotificationContext - 通知系统
+### 业务数据
 
-### 4. 安全优化
-- API密钥移至后端，不在前端暴露
-- 密码哈希存储
-- 请求验证和清理
+| 方法 | 端点 | 描述 |
+|------|------|------|
+| GET/POST | `/api/products/` | 商品列表/创建 |
+| GET/PUT/DELETE | `/api/products/{id}` | 商品详情/更新/删除 |
+| GET/POST | `/api/orders/` | 订单列表/创建 |
+| PATCH | `/api/orders/{id}/status` | 更新订单状态 |
+| GET/POST | `/api/tables/` | 桌台列表/创建 |
+| GET/POST | `/api/categories/` | 分类列表/创建 |
+| GET/POST | `/api/users/` | 会员列表/创建 |
+| GET | `/api/inventory/logs` | 库存日志 |
 
-### 5. 数据库优化
-- 添加审计字段 (createdAt, updatedAt)
-- 软删除支持
-- 数据库索引优化
-- 系统配置表和审计日志表
+### 数据分析
 
-### 6. UI/UX改进
-- 全局Loading状态
-- 骨架屏占位
-- 通知提示系统
-- 错误边界处理
+| 方法 | 端点 | 描述 |
+|------|------|------|
+| GET | `/api/analytics/dashboard` | 仪表板统计 |
+| GET | `/api/analytics/sales-summary` | 销售汇总 |
+| GET | `/api/analytics/top-products` | 热销商品 |
+| GET | `/api/analytics/hourly-sales` | 时段销售 |
 
-### 7. 测试框架
-- Jest + React Testing Library
-- API服务测试
-- Context测试
-- 组件测试
+### 界面装修
 
-## 环境变量
+| 方法 | 端点 | 描述 |
+|------|------|------|
+| GET | `/api/interface/pages` | 页面列表 |
+| GET | `/api/interface/pages/type/{type}` | 按类型获取页面 |
+| POST | `/api/interface/pages/{id}/widgets` | 添加组件 |
+| PUT | `/api/interface/widgets/{id}` | 更新组件 |
+| POST | `/api/interface/pages/{id}/publish` | 发布页面 |
+| GET/POST | `/api/interface/templates` | 模板管理 |
+| GET/POST | `/api/interface/themes` | 主题管理 |
 
-创建 `.env.local` 文件：
-
-```env
-# 可选：API服务器地址
-VITE_API_URL=http://localhost:8000/api
-```
-
-后端环境变量（在启动时设置）：
-
-```bash
-# Gemini API密钥（可选，用于AI功能）
-export GEMINI_API_KEY=your_api_key
-```
-
-## 脚本命令
+## 开发命令
 
 ```bash
 # 开发
@@ -190,31 +204,85 @@ npm run backend      # 启动后端服务器
 npm run build        # 构建生产版本
 npm run preview      # 预览构建结果
 
+# 代码质量
+npm run type-check   # TypeScript 类型检查
+npm run lint         # ESLint 检查
+
 # 测试
 npm run test         # 运行测试
 npm run test:watch   # 监视模式
 npm run test:coverage # 覆盖率报告
-
-# 其他
-npm run type-check   # TypeScript类型检查
-npm run lint         # 代码检查
 ```
 
-## API端点
+## 环境变量
 
-| 端点 | 方法 | 描述 |
-|------|------|------|
-| `/api/auth/login` | POST | 用户登录 |
-| `/api/auth/logout` | POST | 用户登出 |
-| `/api/auth/me` | GET | 获取当前用户 |
-| `/api/products/` | GET/POST | 商品列表/创建 |
-| `/api/products/{id}` | GET/PUT/DELETE | 商品操作 |
-| `/api/orders/` | GET/POST | 订单列表/创建 |
-| `/api/tables/` | GET/POST | 桌台列表/创建 |
-| `/api/inventory/logs` | GET/POST | 库存日志 |
-| `/api/analytics/sales-summary` | GET | 销售汇总 |
-| `/api/ai/insight` | POST | AI业务洞察 |
+### 前端 (.env.local)
 
-## 许可证
+```env
+VITE_API_URL=http://localhost:8000/api
+```
+
+### 后端
+
+```bash
+# 可选：Gemini API 密钥（用于 AI 分析功能）
+export GEMINI_API_KEY=your_api_key
+```
+
+## 架构特点
+
+### 前端架构
+
+- **Context API** - 轻量级状态管理，避免 props drilling
+- **统一 API 层** - 请求拦截、错误处理、自动重试、Token 刷新
+- **路由保护** - 基于认证状态的路由守卫
+- **组件化设计** - 高复用性 UI 组件库
+
+### 后端架构
+
+- **分层设计** - Router → CRUD → Model 清晰分层
+- **数据验证** - Pydantic v2 严格类型校验
+- **审计字段** - 自动记录 createdAt/updatedAt
+- **软删除** - 支持数据软删除和恢复
+- **索引优化** - 关键字段索引加速查询
+
+### 安全特性
+
+- JWT Token 认证
+- 密码哈希存储 (SHA-256)
+- API 密钥后端管理
+- CORS 跨域配置
+- 请求日志记录
+
+## 数据库模型
+
+```
+SystemUser      # 系统用户（员工）
+Category        # 商品分类
+Product         # 商品
+Supplier        # 供应商
+Table           # 餐桌
+User            # 会员用户
+Order           # 订单
+OrderItem       # 订单项
+Reservation     # 预订
+StockLog        # 库存日志
+InterfacePage   # 界面页面
+InterfaceWidget # 界面组件
+InterfaceTemplate # 界面模板
+InterfaceTheme  # 界面主题
+SystemConfig    # 系统配置
+AuditLog        # 审计日志
+```
+
+## 截图预览
+
+> 待补充
+
+## License
 
 MIT License
+
+## 贡献
+
+欢迎提交 Issue 和 Pull Request。
