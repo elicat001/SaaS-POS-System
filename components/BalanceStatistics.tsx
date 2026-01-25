@@ -2,14 +2,17 @@
 import React, { useState } from 'react';
 import { 
   CreditCard, TrendingUp, ArrowDownLeft, ArrowUpRight, 
-  Wallet, Search, Calendar, Filter, ChevronDown 
+  Wallet, Search, Filter, ChevronDown 
 } from 'lucide-react';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Legend 
 } from 'recharts';
+import DateRangePicker from './DateRangePicker';
 
 const BalanceStatistics: React.FC = () => {
   const [filterType, setFilterType] = useState<'ALL' | 'RECHARGE' | 'CONSUME'>('ALL');
+  const [dateRange, setDateRange] = useState('2025-11-13 ~ 2025-11-19');
+
 
   // --- Mock Data ---
   const trendData = [
@@ -47,9 +50,12 @@ const BalanceStatistics: React.FC = () => {
                   <button key={t} className={`px-3 py-1 rounded ${i === 1 ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-500'}`}>{t}</button>
                ))}
              </div>
-             <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
-                <input type="text" defaultValue="2025-11-13 ~ 2025-11-19" className="pl-9 pr-4 py-1.5 border border-slate-200 rounded text-sm w-48" />
+             <div className="w-64">
+                <DateRangePicker
+                   value={dateRange}
+                   onChange={setDateRange}
+                   placeholder="选择日期范围"
+                />
              </div>
          </div>
       </div>

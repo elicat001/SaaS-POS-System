@@ -10,8 +10,8 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
-from backend.app.database import get_db
-from backend.app import models, schemas
+from app.database import get_db
+from app import models, schemas
 
 router = APIRouter(prefix="/api/interface", tags=["interface"])
 

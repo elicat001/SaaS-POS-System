@@ -2,7 +2,7 @@
 import React, { useState, useRef } from 'react';
 import { Product } from '../types';
 import { CATEGORIES } from '../constants';
-import { Search, Plus, Download, Upload, MoreHorizontal, Edit, Trash2, QrCode, Image as ImageIcon, Minus, DollarSign } from 'lucide-react';
+import { Search, Plus, Download, Upload, MoreHorizontal, Edit, Trash2, QrCode, Image as ImageIcon, Minus, DollarSign, Settings } from 'lucide-react';
 import QRCodeModal from './QRCodeModal';
 
 // Accept props instead of importing PRODUCTS directly
@@ -23,6 +23,64 @@ const ProductList: React.FC<ProductListProps> = ({ products, onUpdateProduct }) 
   
   const [editingCostId, setEditingCostId] = useState<string | null>(null);
   const [tempCost, setTempCost] = useState<string>('');
+  
+  // 新增状态管理
+  const [activeTab, setActiveTab] = useState<string>('在售商品');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedMethod, setSelectedMethod] = useState<string>('');
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
+
+  // 新增事件处理函数
+  const handleSearch = () => {
+    let result = products;
+    
+    // 根据搜索词过滤
+    if (searchTerm) {
+      result = result.filter(p => 
+        p.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    
+    // 根据标签过滤
+    switch (activeTab) {
+      case '在售商品':
+        result = result.filter(p => p.stock > 0 && p.status === 'active');
+        break;
+      case '已售罄商品':
+        result = result.filter(p => p.stock <= 0);
+        break;
+      case '已下架商品':
+        result = result.filter(p => p.status === 'inactive');
+        break;
+      // '全部商品'不需要过滤
+    }
+    
+    setFilteredProducts(result);
+    console.log('搜索执行:', { searchTerm, activeTab, count: result.length });
+  };
+
+  const handleAddProduct = () => {
+    console.log('发布新商品功能 - 待实现');
+    // 这里可以打开模态框或导航到新页面
+  };
+
+  const handleBulkAdd = () => {
+    console.log('批量发布商品功能 - 待实现');
+  };
+
+  const handleExcelImport = () => {
+    console.log('Excel导入功能 - 待实现');
+  };
+
+  const handleExport = () => {
+    console.log('导出数据功能 - 待实现');
+    // 可以实现数据导出为Excel或CSV
+  };
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+    handleSearch(); // 切换标签后重新搜索
+  };
 
   const handleShowQR = (product: Product) => {
     setQrModal({
@@ -86,36 +144,73 @@ const ProductList: React.FC<ProductListProps> = ({ products, onUpdateProduct }) 
          <div className="flex flex-wrap gap-4 items-end mb-4">
             <div className="flex flex-col gap-1">
                <label className="text-xs text-slate-500">商品名称</label>
-               <input type="text" placeholder="商品名称" className="border border-slate-200 rounded px-3 py-1.5 text-sm w-48 focus:outline-none focus:border-emerald-500" />
+               <input 
+                 type="text" 
+                 placeholder="商品名称" 
+                 className="border border-slate-200 rounded px-3 py-1.5 text-sm w-48 focus:outline-none focus:border-emerald-500" 
+                 value={searchTerm}
+                 onChange={(e) => setSearchTerm(e.target.value)}
+                 onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+               />
             </div>
             <div className="flex flex-col gap-1">
                <label className="text-xs text-slate-500">售卖方式</label>
-               <select className="border border-slate-200 rounded px-3 py-1.5 text-sm w-40 focus:outline-none focus:border-emerald-500 text-slate-600">
-                 <option>请选择</option>
+               <select 
+                 className="border border-slate-200 rounded px-3 py-1.5 text-sm w-40 focus:outline-none focus:border-emerald-500 text-slate-600"
+                 value={selectedMethod}
+                 onChange={(e) => setSelectedMethod(e.target.value)}
+               >
+                 <option value="">请选择</option>
+                 <option value="dine_in">堂食</option>
+                 <option value="takeaway">外卖</option>
+                 <option value="delivery">配送</option>
                </select>
             </div>
-            <button className="bg-emerald-500 text-white px-6 py-1.5 rounded text-sm font-medium hover:bg-emerald-600">查询</button>
+            <button 
+              onClick={handleSearch}
+              className="bg-emerald-500 text-white px-6 py-1.5 rounded text-sm font-medium hover:bg-emerald-600 transition-colors"
+            >
+              查询
+            </button>
          </div>
 
          {/* Actions Bar */}
          <div className="flex justify-between items-center pt-4 border-t border-slate-100">
             <div className="flex gap-3">
-               <button className="bg-emerald-500 text-white px-4 py-1.5 rounded text-sm font-medium hover:bg-emerald-600 flex items-center gap-1">
+               <button 
+                 onClick={handleAddProduct}
+                 className="bg-emerald-500 text-white px-4 py-1.5 rounded text-sm font-medium hover:bg-emerald-600 flex items-center gap-1 transition-colors"
+                 title="发布新商品"
+               >
+                 <Plus size={14} />
                  发布新商品
                </button>
-               <button className="bg-white border border-slate-200 text-slate-600 px-4 py-1.5 rounded text-sm font-medium hover:bg-slate-50">
+               <button 
+                 onClick={handleBulkAdd}
+                 className="bg-white border border-slate-200 text-slate-600 px-4 py-1.5 rounded text-sm font-medium hover:bg-slate-50 transition-colors"
+                 title="批量发布商品"
+               >
                  批量发布商品
                </button>
-               <button className="bg-white border border-slate-200 text-slate-600 px-4 py-1.5 rounded text-sm font-medium hover:bg-slate-50">
+               <button 
+                 onClick={handleExcelImport}
+                 className="bg-white border border-slate-200 text-slate-600 px-4 py-1.5 rounded text-sm font-medium hover:bg-slate-50 transition-colors"
+                 title="Excel导入商品"
+               >
                  excel导入
                </button>
-               <button className="bg-white border border-slate-200 text-slate-600 px-4 py-1.5 rounded text-sm font-medium hover:bg-slate-50">
+               <button 
+                 onClick={handleExport}
+                 className="bg-white border border-slate-200 text-slate-600 px-4 py-1.5 rounded text-sm font-medium hover:bg-slate-50 transition-colors"
+                 title="导出商品数据"
+               >
+                 <Download size={14} />
                  导出
                </button>
             </div>
             <div className="flex items-center gap-2 text-sm text-slate-500 cursor-pointer">
                <span>商品排序</span>
-               <SettingsIcon />
+               <Settings size={14} className="text-slate-400" />
             </div>
          </div>
       </div>
@@ -127,7 +222,12 @@ const ProductList: React.FC<ProductListProps> = ({ products, onUpdateProduct }) 
             {['全部商品', '在售商品', '已售罄商品', '已下架商品'].map((tab, idx) => (
                <button 
                   key={tab}
-                  className={`px-6 py-3 text-sm font-medium ${idx === 1 ? 'text-emerald-500 border-b-2 border-emerald-500' : 'text-slate-600 hover:text-emerald-500'}`}
+                  onClick={() => handleTabChange(tab)}
+                  className={`px-6 py-3 text-sm font-medium transition-colors ${
+                    activeTab === tab 
+                      ? 'text-emerald-500 border-b-2 border-emerald-500 bg-emerald-50/30' 
+                      : 'text-slate-600 hover:text-emerald-500 hover:bg-slate-50'
+                  }`}
                >
                  {tab}
                </button>

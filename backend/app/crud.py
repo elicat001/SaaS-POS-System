@@ -1,7 +1,7 @@
 from typing import List, Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import select, func
-from backend.app import models
+from app import models
 
 def list_categories(db: Session) -> List[models.Category]:
     return db.execute(select(models.Category)).scalars().all()

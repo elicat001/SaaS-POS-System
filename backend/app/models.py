@@ -6,7 +6,7 @@ import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, Integer, Float, Text, ForeignKey, Boolean, Index, event
 from sqlalchemy.orm import relationship
-from backend.app.database import Base
+from app.database import Base
 
 
 # ==================== 基础Mixin ====================

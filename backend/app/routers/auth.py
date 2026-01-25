@@ -13,8 +13,8 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from backend.app.database import get_db
-from backend.app import models
+from app.database import get_db
+from app import models
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 security = HTTPBearer()

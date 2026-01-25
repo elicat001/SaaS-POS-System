@@ -2,15 +2,17 @@
 import React, { useState } from 'react';
 import { 
   BarChart3, TrendingUp, TrendingDown, DollarSign, ShoppingCart, 
-  CreditCard, Calendar, Download, RefreshCw, ChevronDown 
+  CreditCard, Download, RefreshCw 
 } from 'lucide-react';
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, BarChart, Bar, Legend
 } from 'recharts';
+import DateRangePicker from './DateRangePicker';
 
 const SalesSummary: React.FC = () => {
   const [timeRange, setTimeRange] = useState('7DAYS');
+  const [dateRange, setDateRange] = useState('2025-11-13 ~ 2025-11-19');
 
   // --- Mock Data ---
   const trendData = [
@@ -71,9 +73,12 @@ const SalesSummary: React.FC = () => {
                   </button>
                ))}
             </div>
-            <div className="flex items-center gap-2 border border-slate-200 rounded-lg px-3 py-1.5 bg-white text-sm text-slate-600">
-               <Calendar size={14} className="text-slate-400" />
-               <span>2025-11-13 ~ 2025-11-19</span>
+            <div className="w-64">
+               <DateRangePicker
+                  value={dateRange}
+                  onChange={setDateRange}
+                  placeholder="选择日期范围"
+               />
             </div>
             <button className="p-2 border border-slate-200 rounded-lg hover:bg-slate-50 text-slate-600" title="刷新数据">
                <RefreshCw size={16} />

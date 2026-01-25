@@ -15,20 +15,21 @@
     "backend": "cd backend && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"
   },
   "dependencies": {
-    "recharts": "^3.4.1",
     "lucide-react": "^0.554.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^7.9.6"
+    "react-is": "^19.2.3",
+    "react-router-dom": "^7.9.6",
+    "recharts": "^3.4.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.0.0",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.0.0",
     "@types/node": "^22.14.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react": "^5.0.0",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/jest-dom": "^6.0.0",
-    "@testing-library/user-event": "^14.0.0",
     "jest": "^29.0.0",
     "jest-environment-jsdom": "^29.0.0",
     "ts-jest": "^29.0.0",

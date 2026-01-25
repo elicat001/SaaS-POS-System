@@ -1,9 +1,9 @@
 from typing import List
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from backend.app.database import SessionLocal
-from backend.app import crud
-from backend.app.schemas import Reservation, ReservationCreate
+from app.database import SessionLocal
+from app import crud
+from app.schemas import Reservation, ReservationCreate
 
 router = APIRouter(prefix="/api/reservations", tags=["reservations"])
 

@@ -1,9 +1,9 @@
 from typing import List
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from backend.app.database import SessionLocal
-from backend.app import crud
-from backend.app.schemas import StockLog, StockLogCreate
+from app.database import SessionLocal
+from app import crud
+from app.schemas import StockLog, StockLogCreate
 
 router = APIRouter(prefix="/api/inventory", tags=["inventory"])
 

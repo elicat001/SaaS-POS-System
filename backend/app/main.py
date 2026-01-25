@@ -11,13 +11,13 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from backend.app.database import Base, engine, SessionLocal
-from backend.app.routers import (
+from app.database import Base, engine, SessionLocal
+from app.routers import (
     products, categories, suppliers, tables, users,
     orders, reservations, inventory, analytics, auth,
     interface
 )
-from backend.app import models
+from app import models
 
 
 # ==================== 应用生命周期管理 ====================
