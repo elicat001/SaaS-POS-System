@@ -1,1 +1,0 @@
-# .claude/ — Team AI Workflow
