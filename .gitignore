@@ -25,3 +25,23 @@ dist-ssr
 
 # Claude
 .claude/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+*.egg
+.venv/
+venv/
+ENV/
+
+# Database
+*.db
+*.sqlite3
+
+# Build artifacts
+*.tsbuildinfo
