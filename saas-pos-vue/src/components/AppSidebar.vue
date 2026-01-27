@@ -75,7 +75,7 @@ function navigateTo(path: string) {
               :class="[
                 'w-full flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors',
                 isActive(item.path)
-                  ? 'bg-blue-50 text-blue-700 font-medium'
+                  ? 'bg-emerald-50 text-emerald-700 font-medium'
                   : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
               ]"
             >
@@ -98,7 +98,7 @@ function navigateTo(path: string) {
               :class="[
                 'w-full flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors',
                 isActive(item.path)
-                  ? 'bg-blue-50 text-blue-700 font-medium'
+                  ? 'bg-emerald-50 text-emerald-700 font-medium'
                   : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
               ]"
             >

@@ -43,7 +43,7 @@ function handleInput(event: Event) {
       :readonly="readonly"
       @input="handleInput"
       :class="[
-        'w-full px-3 py-2 border rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
+        'w-full px-3 py-2 border rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent',
         error ? 'border-red-300 bg-red-50' : 'border-gray-300',
         disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'
       ]"

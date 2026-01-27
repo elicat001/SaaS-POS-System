@@ -19,7 +19,7 @@ const totalOrders = commissionData.value.reduce((sum, d) => sum + d.orders, 0)
     <div class="grid grid-cols-4 gap-4">
       <div class="bg-white p-4 rounded-lg shadow-sm">
         <div class="flex items-center gap-3">
-          <div class="p-3 bg-blue-100 rounded-lg"><Users class="w-6 h-6 text-blue-600" /></div>
+          <div class="p-3 bg-emerald-100 rounded-lg"><Users class="w-6 h-6 text-emerald-600" /></div>
           <div><div class="text-sm text-gray-500">员工数</div><div class="text-2xl font-bold">{{ commissionData.length }}</div></div>
         </div>
       </div>
@@ -57,7 +57,7 @@ const totalOrders = commissionData.value.reduce((sum, d) => sum + d.orders, 0)
         <tbody class="divide-y">
           <tr v-for="item in commissionData" :key="item.id" class="hover:bg-gray-50">
             <td class="px-4 py-3 font-medium">{{ item.name }}</td>
-            <td class="px-4 py-3"><span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-700">{{ item.role }}</span></td>
+            <td class="px-4 py-3"><span class="px-2 py-1 text-xs rounded-full bg-emerald-100 text-emerald-700">{{ item.role }}</span></td>
             <td class="px-4 py-3 text-green-600">¥{{ item.sales.toFixed(2) }}</td>
             <td class="px-4 py-3">{{ item.orders }}</td>
             <td class="px-4 py-3 font-medium text-purple-600">¥{{ item.commission.toFixed(2) }}</td>

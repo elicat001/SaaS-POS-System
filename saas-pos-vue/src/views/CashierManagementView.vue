@@ -21,7 +21,7 @@ const currentShift = shifts.value.find(s => s.status === 'active')
     <div class="grid grid-cols-4 gap-4">
       <div class="bg-white p-4 rounded-lg shadow-sm">
         <div class="flex items-center gap-3">
-          <div class="p-3 bg-blue-100 rounded-lg"><Calculator class="w-6 h-6 text-blue-600" /></div>
+          <div class="p-3 bg-emerald-100 rounded-lg"><Calculator class="w-6 h-6 text-emerald-600" /></div>
           <div><div class="text-sm text-gray-500">当前收银员</div><div class="text-xl font-bold">{{ currentShift?.cashier || '无' }}</div></div>
         </div>
       </div>

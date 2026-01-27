@@ -100,7 +100,7 @@ function exportReport() {
           :class="[
             'px-4 py-2 text-sm rounded-lg transition-colors',
             reportType === type.value
-              ? 'bg-blue-500 text-white'
+              ? 'bg-emerald-500 text-white'
               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
           ]"
         >
@@ -126,9 +126,9 @@ function exportReport() {
             <span class="text-gray-600">待处理订单</span>
             <span class="font-bold text-yellow-600">{{ orderStore.pendingOrders.length }}</span>
           </div>
-          <div class="flex justify-between p-3 bg-blue-50 rounded">
+          <div class="flex justify-between p-3 bg-emerald-50 rounded">
             <span class="text-gray-600">今日营业额</span>
-            <span class="font-bold text-blue-600">¥{{ orderStore.todayRevenue.toFixed(2) }}</span>
+            <span class="font-bold text-emerald-600">¥{{ orderStore.todayRevenue.toFixed(2) }}</span>
           </div>
           <div class="flex justify-between p-3 bg-green-50 rounded">
             <span class="text-gray-600">今日利润</span>

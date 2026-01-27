@@ -33,7 +33,7 @@ function applyTemplate(template: any) {
     </div>
     <div class="bg-white rounded-lg shadow-sm p-4">
       <div class="flex gap-2 mb-6">
-        <button v-for="cat in categories" :key="cat.value" @click="selectedCategory = cat.value" :class="['px-4 py-2 text-sm rounded-lg transition-colors', selectedCategory === cat.value ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">{{ cat.label }}</button>
+        <button v-for="cat in categories" :key="cat.value" @click="selectedCategory = cat.value" :class="['px-4 py-2 text-sm rounded-lg transition-colors', selectedCategory === cat.value ? 'bg-emerald-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">{{ cat.label }}</button>
       </div>
       <div class="grid grid-cols-4 gap-4">
         <div v-for="template in templates" :key="template.id" class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">

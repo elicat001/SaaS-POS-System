@@ -125,7 +125,7 @@ async function submitOrder() {
           :class="[
             'px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 transition-colors',
             selectedCategory === category.id
-              ? 'border-blue-500 text-blue-600 bg-blue-50'
+              ? 'border-emerald-500 text-emerald-600 bg-emerald-50'
               : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
           ]"
         >
@@ -141,7 +141,7 @@ async function submitOrder() {
             v-model="searchQuery"
             type="text"
             placeholder="搜索商品..."
-            class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
         </div>
       </div>
@@ -155,7 +155,7 @@ async function submitOrder() {
             @click="addToCart(product)"
             :class="[
               'cursor-pointer rounded-lg border p-3 transition-all hover:shadow-md',
-              product.stock <= 0 ? 'opacity-50 cursor-not-allowed' : 'hover:border-blue-300'
+              product.stock <= 0 ? 'opacity-50 cursor-not-allowed' : 'hover:border-emerald-300'
             ]"
           >
             <img
@@ -165,7 +165,7 @@ async function submitOrder() {
             />
             <h3 class="text-sm font-medium text-gray-800 truncate">{{ product.name }}</h3>
             <div class="flex justify-between items-center mt-2">
-              <span class="text-blue-600 font-bold">¥{{ product.price.toFixed(2) }}</span>
+              <span class="text-emerald-600 font-bold">¥{{ product.price.toFixed(2) }}</span>
               <span class="text-xs text-gray-400">库存: {{ product.stock }}</span>
             </div>
           </div>
@@ -206,7 +206,7 @@ async function submitOrder() {
             :class="[
               'flex-1 py-2 text-sm rounded-lg transition-colors',
               orderType === type.value
-                ? 'bg-blue-500 text-white'
+                ? 'bg-emerald-500 text-white'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             ]"
           >
@@ -218,7 +218,7 @@ async function submitOrder() {
         <div v-if="orderType === 'DINE_IN'">
           <select
             v-model="selectedTable"
-            class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
           >
             <option value="">选择桌台</option>
             <option
@@ -252,7 +252,7 @@ async function submitOrder() {
             />
             <div class="flex-1 min-w-0">
               <h4 class="text-sm font-medium truncate">{{ item.name }}</h4>
-              <p class="text-blue-600 text-sm">¥{{ item.price.toFixed(2) }}</p>
+              <p class="text-emerald-600 text-sm">¥{{ item.price.toFixed(2) }}</p>
             </div>
             <div class="flex items-center gap-2">
               <button
@@ -283,7 +283,7 @@ async function submitOrder() {
       <div class="border-t p-4">
         <div class="flex justify-between items-center mb-4">
           <span class="text-gray-600">合计 ({{ cartItemCount }} 件)</span>
-          <span class="text-xl font-bold text-blue-600">¥{{ cartTotal.toFixed(2) }}</span>
+          <span class="text-xl font-bold text-emerald-600">¥{{ cartTotal.toFixed(2) }}</span>
         </div>
         <Button
           variant="primary"
@@ -317,7 +317,7 @@ async function submitOrder() {
           </div>
           <div class="flex justify-between text-lg">
             <span class="text-gray-800 font-medium">应付金额</span>
-            <span class="text-blue-600 font-bold">¥{{ cartTotal.toFixed(2) }}</span>
+            <span class="text-emerald-600 font-bold">¥{{ cartTotal.toFixed(2) }}</span>
           </div>
         </div>
 
@@ -331,7 +331,7 @@ async function submitOrder() {
               :class="[
                 'p-3 text-sm rounded-lg border transition-colors',
                 paymentMethod === method
-                  ? 'border-blue-500 bg-blue-50 text-blue-700'
+                  ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
                   : 'border-gray-200 hover:border-gray-300'
               ]"
             >

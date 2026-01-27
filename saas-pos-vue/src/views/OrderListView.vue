@@ -112,7 +112,7 @@ function cancelOrder(order: any) {
             v-model="searchQuery"
             type="text"
             placeholder="搜索订单号或商品..."
-            class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
         </div>
 
@@ -125,7 +125,7 @@ function cancelOrder(order: any) {
             :class="[
               'px-3 py-2 text-sm rounded-lg transition-colors',
               statusFilter === option.value
-                ? 'bg-blue-500 text-white'
+                ? 'bg-emerald-500 text-white'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             ]"
           >
@@ -156,7 +156,7 @@ function cancelOrder(order: any) {
               {{ order.orderNo }}
             </td>
             <td class="px-4 py-3">
-              <span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-700">
+              <span class="px-2 py-1 text-xs rounded-full bg-emerald-100 text-emerald-700">
                 {{ getOrderTypeLabel(order.type) }}
               </span>
             </td>
@@ -171,7 +171,7 @@ function cancelOrder(order: any) {
                 </span>
               </div>
             </td>
-            <td class="px-4 py-3 text-sm font-medium text-blue-600">
+            <td class="px-4 py-3 text-sm font-medium text-emerald-600">
               ¥{{ order.total.toFixed(2) }}
             </td>
             <td class="px-4 py-3">
@@ -186,7 +186,7 @@ function cancelOrder(order: any) {
               <div class="flex items-center gap-1">
                 <button
                   @click="viewOrder(order)"
-                  class="p-1 text-blue-600 hover:bg-blue-50 rounded"
+                  class="p-1 text-emerald-600 hover:bg-emerald-50 rounded"
                   title="查看详情"
                 >
                   <Eye class="w-4 h-4" />
@@ -269,7 +269,7 @@ function cancelOrder(order: any) {
                   <p class="text-xs text-gray-500">¥{{ item.price.toFixed(2) }} × {{ item.quantity }}</p>
                 </div>
               </div>
-              <span class="font-medium text-blue-600">
+              <span class="font-medium text-emerald-600">
                 ¥{{ (item.price * item.quantity).toFixed(2) }}
               </span>
             </div>
@@ -278,7 +278,7 @@ function cancelOrder(order: any) {
 
         <div class="border-t pt-4 flex justify-between text-lg">
           <span class="font-medium">订单总额</span>
-          <span class="font-bold text-blue-600">¥{{ selectedOrder.total.toFixed(2) }}</span>
+          <span class="font-bold text-emerald-600">¥{{ selectedOrder.total.toFixed(2) }}</span>
         </div>
       </div>
 

@@ -77,7 +77,7 @@ function preview() {
       <div class="w-48 bg-white rounded-lg shadow-sm p-4">
         <h3 class="font-medium text-gray-800 mb-3">页面列表</h3>
         <div class="space-y-2">
-          <button v-for="page in pages" :key="page.id" @click="selectPage(page)" :class="['w-full text-left px-3 py-2 rounded-lg transition-colors', activeTab === page.id ? 'bg-blue-50 text-blue-700' : 'hover:bg-gray-50']">{{ page.name }}</button>
+          <button v-for="page in pages" :key="page.id" @click="selectPage(page)" :class="['w-full text-left px-3 py-2 rounded-lg transition-colors', activeTab === page.id ? 'bg-emerald-50 text-emerald-700' : 'hover:bg-gray-50']">{{ page.name }}</button>
         </div>
       </div>
       <!-- Widget editor -->
@@ -110,7 +110,7 @@ function preview() {
     </div>
     <Modal v-model="showWidgetModal" title="添加组件">
       <div class="grid grid-cols-3 gap-3">
-        <button v-for="type in widgetTypes" :key="type.type" @click="addWidget(type.type)" class="p-4 border rounded-lg hover:border-blue-500 hover:bg-blue-50 text-center">
+        <button v-for="type in widgetTypes" :key="type.type" @click="addWidget(type.type)" class="p-4 border rounded-lg hover:border-emerald-500 hover:bg-emerald-50 text-center">
           <Palette class="w-6 h-6 mx-auto mb-2 text-gray-400" />
           <p class="text-sm font-medium">{{ type.name }}</p>
         </button>

@@ -131,14 +131,14 @@ function toggleShelf(product: Product) {
             v-model="searchQuery"
             type="text"
             placeholder="搜索商品名称..."
-            class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
         </div>
 
         <!-- Category filter -->
         <select
           v-model="selectedCategory"
-          class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
         >
           <option
             v-for="category in productStore.categories"
@@ -183,7 +183,7 @@ function toggleShelf(product: Product) {
             <td class="px-4 py-3 text-sm text-gray-600">
               {{ productStore.getCategoryName(product.categoryId) }}
             </td>
-            <td class="px-4 py-3 text-sm font-medium text-blue-600">
+            <td class="px-4 py-3 text-sm font-medium text-emerald-600">
               ¥{{ product.price.toFixed(2) }}
             </td>
             <td class="px-4 py-3 text-sm text-gray-600">
@@ -218,7 +218,7 @@ function toggleShelf(product: Product) {
               <div class="flex items-center gap-2">
                 <button
                   @click="openEditModal(product)"
-                  class="p-1 text-blue-600 hover:bg-blue-50 rounded"
+                  class="p-1 text-emerald-600 hover:bg-emerald-50 rounded"
                 >
                   <Edit2 class="w-4 h-4" />
                 </button>
@@ -252,7 +252,7 @@ function toggleShelf(product: Product) {
           <label class="block text-sm font-medium text-gray-700 mb-1">分类</label>
           <select
             v-model="form.categoryId"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
           >
             <option
               v-for="category in productStore.categories.filter(c => c.id !== 'c1')"
@@ -274,7 +274,7 @@ function toggleShelf(product: Product) {
             <input
               v-model="form.isOnShelf"
               type="checkbox"
-              class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+              class="w-4 h-4 text-emerald-600 rounded focus:ring-emerald-500"
             />
             <span class="text-sm text-gray-700">上架销售</span>
           </label>

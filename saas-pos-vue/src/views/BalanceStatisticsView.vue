@@ -23,7 +23,7 @@ const stats = computed(() => {
     <div class="grid grid-cols-4 gap-4">
       <div class="bg-white p-4 rounded-lg shadow-sm">
         <div class="flex items-center gap-3">
-          <div class="p-3 bg-blue-100 rounded-lg"><Users class="w-6 h-6 text-blue-600" /></div>
+          <div class="p-3 bg-emerald-100 rounded-lg"><Users class="w-6 h-6 text-emerald-600" /></div>
           <div><div class="text-sm text-gray-500">会员数量</div><div class="text-2xl font-bold">{{ stats.memberCount }}</div></div>
         </div>
       </div>
@@ -60,7 +60,7 @@ const stats = computed(() => {
         </thead>
         <tbody class="divide-y">
           <tr v-for="user in userStore.members" :key="user.id" class="hover:bg-gray-50">
-            <td class="px-4 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center"><span class="text-blue-600 font-medium text-sm">{{ user.name[0] }}</span></div><span class="font-medium">{{ user.name }}</span></div></td>
+            <td class="px-4 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center"><span class="text-emerald-600 font-medium text-sm">{{ user.name[0] }}</span></div><span class="font-medium">{{ user.name }}</span></div></td>
             <td class="px-4 py-3 text-gray-600">{{ user.phone }}</td>
             <td class="px-4 py-3"><span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-700">Lv.{{ user.level }}</span></td>
             <td class="px-4 py-3 font-medium text-green-600">¥{{ user.balance.toFixed(2) }}</td>

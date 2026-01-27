@@ -20,7 +20,7 @@ function syncData() {
     <div class="grid grid-cols-2 gap-4">
       <div class="bg-white rounded-lg shadow-sm p-6">
         <div class="flex items-center gap-3 mb-4">
-          <div class="p-3 bg-blue-100 rounded-lg"><Download class="w-6 h-6 text-blue-600" /></div>
+          <div class="p-3 bg-emerald-100 rounded-lg"><Download class="w-6 h-6 text-emerald-600" /></div>
           <div><h3 class="font-bold text-gray-800">代码包下载</h3><p class="text-sm text-gray-500">下载最新的小程序代码包</p></div>
         </div>
         <Button variant="outline" @click="downloadCode"><Download class="w-4 h-4" />下载代码包</Button>

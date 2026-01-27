@@ -27,7 +27,7 @@ const activities = ref([
     <div class="grid grid-cols-4 gap-4">
       <div class="bg-white p-4 rounded-lg shadow-sm">
         <div class="flex items-center gap-3">
-          <div class="p-3 bg-blue-100 rounded-lg"><Ticket class="w-6 h-6 text-blue-600" /></div>
+          <div class="p-3 bg-emerald-100 rounded-lg"><Ticket class="w-6 h-6 text-emerald-600" /></div>
           <div><div class="text-sm text-gray-500">优惠券总数</div><div class="text-2xl font-bold">{{ coupons.length }}</div></div>
         </div>
       </div>
@@ -52,8 +52,8 @@ const activities = ref([
     </div>
     <div class="bg-white rounded-lg shadow-sm">
       <div class="flex border-b">
-        <button @click="activeTab = 'coupons'" :class="['px-6 py-3 text-sm font-medium border-b-2 transition-colors', activeTab === 'coupons' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500']">优惠券管理</button>
-        <button @click="activeTab = 'activities'" :class="['px-6 py-3 text-sm font-medium border-b-2 transition-colors', activeTab === 'activities' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500']">营销活动</button>
+        <button @click="activeTab = 'coupons'" :class="['px-6 py-3 text-sm font-medium border-b-2 transition-colors', activeTab === 'coupons' ? 'border-emerald-500 text-emerald-600' : 'border-transparent text-gray-500']">优惠券管理</button>
+        <button @click="activeTab = 'activities'" :class="['px-6 py-3 text-sm font-medium border-b-2 transition-colors', activeTab === 'activities' ? 'border-emerald-500 text-emerald-600' : 'border-transparent text-gray-500']">营销活动</button>
       </div>
       <div v-if="activeTab === 'coupons'" class="p-4">
         <table class="w-full">
@@ -71,10 +71,10 @@ const activities = ref([
             <tr v-for="coupon in coupons" :key="coupon.id" class="hover:bg-gray-50">
               <td class="px-4 py-3 font-medium">{{ coupon.name }}</td>
               <td class="px-4 py-3 text-gray-600">{{ coupon.type }}</td>
-              <td class="px-4 py-3 text-blue-600">{{ coupon.type === '折扣券' ? coupon.value + '折' : '¥' + coupon.value }}</td>
+              <td class="px-4 py-3 text-emerald-600">{{ coupon.type === '折扣券' ? coupon.value + '折' : '¥' + coupon.value }}</td>
               <td class="px-4 py-3">{{ coupon.stock }} / {{ coupon.used }}</td>
               <td class="px-4 py-3"><span :class="['px-2 py-1 text-xs rounded-full', coupon.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500']">{{ coupon.status === 'active' ? '启用' : '停用' }}</span></td>
-              <td class="px-4 py-3"><div class="flex gap-2"><button class="p-1 text-blue-600 hover:bg-blue-50 rounded"><Edit2 class="w-4 h-4" /></button><button class="p-1 text-red-600 hover:bg-red-50 rounded"><Trash2 class="w-4 h-4" /></button></div></td>
+              <td class="px-4 py-3"><div class="flex gap-2"><button class="p-1 text-emerald-600 hover:bg-emerald-50 rounded"><Edit2 class="w-4 h-4" /></button><button class="p-1 text-red-600 hover:bg-red-50 rounded"><Trash2 class="w-4 h-4" /></button></div></td>
             </tr>
           </tbody>
         </table>
@@ -94,7 +94,7 @@ const activities = ref([
               <td class="px-4 py-3 font-medium">{{ activity.name }}</td>
               <td class="px-4 py-3 text-gray-600">{{ activity.startTime }}</td>
               <td class="px-4 py-3 text-gray-600">{{ activity.endTime }}</td>
-              <td class="px-4 py-3"><span :class="['px-2 py-1 text-xs rounded-full', activity.status === 'upcoming' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-500']">{{ activity.status === 'upcoming' ? '即将开始' : '已结束' }}</span></td>
+              <td class="px-4 py-3"><span :class="['px-2 py-1 text-xs rounded-full', activity.status === 'upcoming' ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-500']">{{ activity.status === 'upcoming' ? '即将开始' : '已结束' }}</span></td>
             </tr>
           </tbody>
         </table>

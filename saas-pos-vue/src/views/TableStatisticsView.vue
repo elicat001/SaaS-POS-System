@@ -25,7 +25,7 @@ const totalRevenue = computed(() => tableStats.value.reduce((sum, t) => sum + t.
     <div class="grid grid-cols-4 gap-4">
       <div class="bg-white p-4 rounded-lg shadow-sm">
         <div class="flex items-center gap-3">
-          <div class="p-3 bg-blue-100 rounded-lg"><Table2 class="w-6 h-6 text-blue-600" /></div>
+          <div class="p-3 bg-emerald-100 rounded-lg"><Table2 class="w-6 h-6 text-emerald-600" /></div>
           <div><div class="text-sm text-gray-500">总桌台数</div><div class="text-2xl font-bold">{{ tableStore.tables.length }}</div></div>
         </div>
       </div>
@@ -67,7 +67,7 @@ const totalRevenue = computed(() => tableStats.value.reduce((sum, t) => sum + t.
             <td class="px-4 py-3 text-gray-600">{{ table.capacity }}人</td>
             <td class="px-4 py-3"><span :class="['px-2 py-1 text-xs rounded-full', table.status === 'AVAILABLE' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700']">{{ table.status === 'AVAILABLE' ? '空闲' : '使用中' }}</span></td>
             <td class="px-4 py-3">{{ table.orderCount }}</td>
-            <td class="px-4 py-3 font-medium text-blue-600">¥{{ table.revenue.toFixed(2) }}</td>
+            <td class="px-4 py-3 font-medium text-emerald-600">¥{{ table.revenue.toFixed(2) }}</td>
           </tr>
         </tbody>
       </table>

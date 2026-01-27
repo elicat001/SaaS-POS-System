@@ -59,12 +59,12 @@ function printQR() {
       </div>
       <div class="mb-4">
         <label class="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" v-model="selectAll" class="w-4 h-4 text-blue-600 rounded" />
+          <input type="checkbox" v-model="selectAll" class="w-4 h-4 text-emerald-600 rounded" />
           <span class="text-sm">全选</span>
         </label>
       </div>
       <div class="grid grid-cols-5 gap-4">
-        <div v-for="table in tableStore.tables" :key="table.id" @click="toggleTable(table.id)" :class="['cursor-pointer border-2 rounded-lg p-4 text-center transition-all', selectedTables.includes(table.id) ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300']">
+        <div v-for="table in tableStore.tables" :key="table.id" @click="toggleTable(table.id)" :class="['cursor-pointer border-2 rounded-lg p-4 text-center transition-all', selectedTables.includes(table.id) ? 'border-emerald-500 bg-emerald-50' : 'border-gray-200 hover:border-gray-300']">
           <div class="w-20 h-20 mx-auto bg-gray-100 rounded-lg flex items-center justify-center mb-2">
             <QrCode class="w-12 h-12 text-gray-400" />
           </div>

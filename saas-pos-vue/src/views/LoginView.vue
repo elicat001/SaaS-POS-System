@@ -45,15 +45,15 @@ async function handleLogin() {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-100 p-4">
     <div class="w-full max-w-md">
       <!-- Logo -->
       <div class="text-center mb-8">
-        <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl shadow-lg mb-4">
-          <span class="text-white text-2xl font-bold">POS</span>
+        <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl shadow-lg mb-4">
+          <span class="text-white text-3xl font-bold">云</span>
         </div>
-        <h1 class="text-2xl font-bold text-gray-900">SaaS POS System</h1>
-        <p class="text-gray-500 mt-1">餐饮管理系统</p>
+        <h1 class="text-2xl font-bold text-gray-900">客如云</h1>
+        <p class="text-gray-500 mt-1">智慧餐饮管理系统</p>
       </div>
 
       <!-- Login form -->
@@ -70,7 +70,7 @@ async function handleLogin() {
                 v-model="username"
                 type="text"
                 placeholder="请输入用户名"
-                class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -84,7 +84,7 @@ async function handleLogin() {
                 v-model="password"
                 type="password"
                 placeholder="请输入密码"
-                class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -107,8 +107,8 @@ async function handleLogin() {
         </form>
 
         <!-- Demo hint -->
-        <div class="mt-6 p-4 bg-blue-50 rounded-lg">
-          <p class="text-sm text-blue-700">
+        <div class="mt-6 p-4 bg-emerald-50 rounded-lg">
+          <p class="text-sm text-emerald-700">
             <strong>演示账号：</strong><br />
             用户名: admin<br />
             密码: admin123

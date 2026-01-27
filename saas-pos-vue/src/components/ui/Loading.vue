@@ -15,7 +15,7 @@ const sizeClasses = {
 
 <template>
   <div class="flex flex-col items-center justify-center gap-3">
-    <Loader2 :class="['animate-spin text-blue-600', sizeClasses[size || 'md']]" />
+    <Loader2 :class="['animate-spin text-emerald-600', sizeClasses[size || 'md']]" />
     <span v-if="text" class="text-sm text-gray-500">{{ text }}</span>
   </div>
 </template>

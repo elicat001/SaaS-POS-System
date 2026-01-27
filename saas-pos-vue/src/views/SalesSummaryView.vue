@@ -95,7 +95,7 @@ const avgOrderValue = computed(() => totalOrders.value > 0 ? totalRevenue.value 
           :class="[
             'px-4 py-2 text-sm rounded-lg transition-colors',
             dateRange === option.value
-              ? 'bg-blue-500 text-white'
+              ? 'bg-emerald-500 text-white'
               : 'bg-white text-gray-600 hover:bg-gray-50'
           ]"
         >
@@ -108,12 +108,12 @@ const avgOrderValue = computed(() => totalOrders.value > 0 ? totalRevenue.value 
     <div class="grid grid-cols-4 gap-4">
       <div class="bg-white p-4 rounded-lg shadow-sm">
         <div class="flex items-center gap-3">
-          <div class="p-3 bg-blue-100 rounded-lg">
-            <DollarSign class="w-6 h-6 text-blue-600" />
+          <div class="p-3 bg-emerald-100 rounded-lg">
+            <DollarSign class="w-6 h-6 text-emerald-600" />
           </div>
           <div>
             <div class="text-sm text-gray-500">营业额</div>
-            <div class="text-2xl font-bold text-blue-600">¥{{ totalRevenue.toFixed(2) }}</div>
+            <div class="text-2xl font-bold text-emerald-600">¥{{ totalRevenue.toFixed(2) }}</div>
           </div>
         </div>
       </div>

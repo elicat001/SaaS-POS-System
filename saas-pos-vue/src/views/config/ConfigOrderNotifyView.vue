@@ -34,23 +34,23 @@ function save() {
       <div class="space-y-4 max-w-xl">
         <label class="flex items-center justify-between p-4 bg-gray-50 rounded-lg cursor-pointer">
           <div><p class="font-medium">新订单提示音</p><p class="text-sm text-gray-500">有新订单时播放提示音</p></div>
-          <input type="checkbox" v-model="settings.newOrderSound" class="w-5 h-5 text-blue-600 rounded" />
+          <input type="checkbox" v-model="settings.newOrderSound" class="w-5 h-5 text-emerald-600 rounded" />
         </label>
         <label class="flex items-center justify-between p-4 bg-gray-50 rounded-lg cursor-pointer">
           <div><p class="font-medium">新订单通知</p><p class="text-sm text-gray-500">有新订单时发送通知</p></div>
-          <input type="checkbox" v-model="settings.newOrderNotify" class="w-5 h-5 text-blue-600 rounded" />
+          <input type="checkbox" v-model="settings.newOrderNotify" class="w-5 h-5 text-emerald-600 rounded" />
         </label>
         <label class="flex items-center justify-between p-4 bg-gray-50 rounded-lg cursor-pointer">
           <div><p class="font-medium">取消订单通知</p><p class="text-sm text-gray-500">订单被取消时通知</p></div>
-          <input type="checkbox" v-model="settings.cancelOrderNotify" class="w-5 h-5 text-blue-600 rounded" />
+          <input type="checkbox" v-model="settings.cancelOrderNotify" class="w-5 h-5 text-emerald-600 rounded" />
         </label>
         <label class="flex items-center justify-between p-4 bg-gray-50 rounded-lg cursor-pointer">
           <div><p class="font-medium">退款通知</p><p class="text-sm text-gray-500">有退款申请时通知</p></div>
-          <input type="checkbox" v-model="settings.refundNotify" class="w-5 h-5 text-blue-600 rounded" />
+          <input type="checkbox" v-model="settings.refundNotify" class="w-5 h-5 text-emerald-600 rounded" />
         </label>
         <label class="flex items-center justify-between p-4 bg-gray-50 rounded-lg cursor-pointer">
           <div><p class="font-medium">库存预警通知</p><p class="text-sm text-gray-500">库存低于预警线时通知</p></div>
-          <input type="checkbox" v-model="settings.lowStockNotify" class="w-5 h-5 text-blue-600 rounded" />
+          <input type="checkbox" v-model="settings.lowStockNotify" class="w-5 h-5 text-emerald-600 rounded" />
         </label>
       </div>
     </div>

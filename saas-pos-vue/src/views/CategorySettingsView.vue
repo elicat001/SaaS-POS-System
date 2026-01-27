@@ -64,7 +64,7 @@ function deleteCategory(category: any) {
           <tr v-for="category in productStore.categories" :key="category.id" class="hover:bg-gray-50">
             <td class="px-4 py-3">
               <div class="flex items-center gap-2">
-                <div class="p-2 bg-blue-100 rounded-lg"><FolderTree class="w-4 h-4 text-blue-600" /></div>
+                <div class="p-2 bg-emerald-100 rounded-lg"><FolderTree class="w-4 h-4 text-emerald-600" /></div>
                 <span class="font-medium">{{ category.name }}</span>
               </div>
             </td>
@@ -72,7 +72,7 @@ function deleteCategory(category: any) {
             <td class="px-4 py-3">{{ category.id === 'c1' ? productStore.products.length : productStore.productsByCategory(category.id).length }}</td>
             <td class="px-4 py-3">
               <div class="flex gap-2">
-                <button @click="openEditModal(category)" class="p-1 text-blue-600 hover:bg-blue-50 rounded" :disabled="category.id === 'c1'"><Edit2 class="w-4 h-4" /></button>
+                <button @click="openEditModal(category)" class="p-1 text-emerald-600 hover:bg-emerald-50 rounded" :disabled="category.id === 'c1'"><Edit2 class="w-4 h-4" /></button>
                 <button @click="deleteCategory(category)" class="p-1 text-red-600 hover:bg-red-50 rounded" :disabled="category.id === 'c1'"><Trash2 class="w-4 h-4" /></button>
               </div>
             </td>

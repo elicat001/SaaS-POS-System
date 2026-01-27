@@ -37,7 +37,7 @@ function save() {
         <Input v-model="config.logo" label="Logo URL" placeholder="https://..." />
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">小程序简介</label>
-          <textarea v-model="config.description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="请输入小程序简介"></textarea>
+          <textarea v-model="config.description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="请输入小程序简介"></textarea>
         </div>
       </div>
     </div>

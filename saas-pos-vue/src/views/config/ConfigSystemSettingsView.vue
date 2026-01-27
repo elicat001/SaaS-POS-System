@@ -32,7 +32,7 @@ function save() {
     <div class="grid gap-4">
       <div class="bg-white rounded-lg shadow-sm p-6">
         <div class="flex items-center gap-3 mb-4">
-          <div class="p-3 bg-blue-100 rounded-lg"><Globe class="w-6 h-6 text-blue-600" /></div>
+          <div class="p-3 bg-emerald-100 rounded-lg"><Globe class="w-6 h-6 text-emerald-600" /></div>
           <div><h2 class="font-bold text-gray-800">基本设置</h2><p class="text-sm text-gray-500">系统基本配置</p></div>
         </div>
         <div class="grid grid-cols-2 gap-4 max-w-2xl">
@@ -68,7 +68,7 @@ function save() {
         <div class="space-y-4 max-w-xl">
           <label class="flex items-center justify-between p-4 bg-gray-50 rounded-lg cursor-pointer">
             <div><p class="font-medium">自动备份</p><p class="text-sm text-gray-500">定期自动备份数据</p></div>
-            <input type="checkbox" v-model="settings.autoBackup" class="w-5 h-5 text-blue-600 rounded" />
+            <input type="checkbox" v-model="settings.autoBackup" class="w-5 h-5 text-emerald-600 rounded" />
           </label>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">备份频率</label>

@@ -250,7 +250,7 @@ function refresh() {
         <div class="flex items-center gap-1 text-gray-500 text-sm mb-3">
           营业实收 <HelpCircle class="w-3 h-3 text-gray-300" />
         </div>
-        <div class="text-2xl font-medium text-blue-500 mb-3">
+        <div class="text-2xl font-medium text-emerald-500 mb-3">
           {{ stats.totalRevenue.toFixed(2) }}
         </div>
         <div class="text-xs text-gray-400">营业实收=订单实收+收款实收</div>
@@ -303,7 +303,7 @@ function refresh() {
           <h3 class="font-bold text-gray-800 text-sm mb-5 flex items-center gap-1">
             订单实收 <HelpCircle class="w-3 h-3 text-gray-300" />
           </h3>
-          <div class="text-3xl font-medium text-blue-500 mb-3">
+          <div class="text-3xl font-medium text-emerald-500 mb-3">
             {{ stats.totalRevenue.toFixed(2) }}
           </div>
           <p class="text-xs text-gray-400 leading-relaxed mb-8">
@@ -384,7 +384,7 @@ function refresh() {
           <h3 class="font-bold text-gray-800 text-sm mb-5 flex items-center gap-1">
             收款实收合计 <HelpCircle class="w-3 h-3 text-gray-300" />
           </h3>
-          <div class="text-3xl font-medium text-blue-500">0</div>
+          <div class="text-3xl font-medium text-emerald-500">0</div>
         </div>
 
         <div class="grid grid-cols-3 gap-x-12 gap-y-8">

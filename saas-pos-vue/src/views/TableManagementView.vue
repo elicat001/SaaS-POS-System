@@ -50,7 +50,7 @@ function getStatusStyle(status: TableStatus) {
     AVAILABLE: 'bg-green-100 border-green-300 text-green-700',
     SCANNED: 'bg-yellow-100 border-yellow-300 text-yellow-700',
     UNPAID: 'bg-red-100 border-red-300 text-red-700',
-    PAID: 'bg-blue-100 border-blue-300 text-blue-700',
+    PAID: 'bg-emerald-100 border-emerald-300 text-emerald-700',
   }
   return styles[status] || styles.AVAILABLE
 }
@@ -175,7 +175,7 @@ function clearTable(table: Table) {
       </div>
       <div class="bg-white p-4 rounded-lg shadow-sm">
         <div class="text-sm text-gray-500 mb-1">今日预订</div>
-        <div class="text-2xl font-bold text-blue-600">{{ tableStore.todayReservations.length }}</div>
+        <div class="text-2xl font-bold text-emerald-600">{{ tableStore.todayReservations.length }}</div>
       </div>
     </div>
 
@@ -189,7 +189,7 @@ function clearTable(table: Table) {
           :class="[
             'px-4 py-2 text-sm rounded-lg transition-colors',
             selectedArea === area
-              ? 'bg-blue-500 text-white'
+              ? 'bg-emerald-500 text-white'
               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
           ]"
         >
@@ -275,7 +275,7 @@ function clearTable(table: Table) {
             </p>
           </div>
           <div class="text-right">
-            <p class="text-blue-600 font-medium">
+            <p class="text-emerald-600 font-medium">
               {{ new Date(reservation.reservationTime).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) }}
             </p>
             <p class="text-xs text-gray-400">{{ reservation.customerPhone }}</p>
@@ -293,7 +293,7 @@ function clearTable(table: Table) {
           <label class="block text-sm font-medium text-gray-700 mb-1">所属区域</label>
           <select
             v-model="form.area"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
           >
             <option value="大厅">大厅</option>
             <option value="包厢">包厢</option>
@@ -320,7 +320,7 @@ function clearTable(table: Table) {
           <input
             v-model="reservationForm.reservationTime"
             type="datetime-local"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
         </div>
         <Input v-model="reservationForm.guests" type="number" label="用餐人数" placeholder="2" />
@@ -330,7 +330,7 @@ function clearTable(table: Table) {
             v-model="reservationForm.notes"
             rows="2"
             placeholder="如: 需要宝宝椅"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
           ></textarea>
         </div>
       </div>

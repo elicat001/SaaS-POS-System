@@ -91,8 +91,8 @@ function formatTime(timestamp: number) {
     <div class="grid grid-cols-4 gap-4">
       <div class="bg-white p-4 rounded-lg shadow-sm">
         <div class="flex items-center gap-3">
-          <div class="p-3 bg-blue-100 rounded-lg">
-            <Package class="w-6 h-6 text-blue-600" />
+          <div class="p-3 bg-emerald-100 rounded-lg">
+            <Package class="w-6 h-6 text-emerald-600" />
           </div>
           <div>
             <div class="text-sm text-gray-500">商品种类</div>
@@ -160,7 +160,7 @@ function formatTime(timestamp: number) {
           :class="[
             'px-6 py-3 text-sm font-medium border-b-2 transition-colors',
             activeTab === 'stock'
-              ? 'border-blue-500 text-blue-600'
+              ? 'border-emerald-500 text-emerald-600'
               : 'border-transparent text-gray-500 hover:text-gray-700'
           ]"
         >
@@ -171,7 +171,7 @@ function formatTime(timestamp: number) {
           :class="[
             'px-6 py-3 text-sm font-medium border-b-2 transition-colors',
             activeTab === 'logs'
-              ? 'border-blue-500 text-blue-600'
+              ? 'border-emerald-500 text-emerald-600'
               : 'border-transparent text-gray-500 hover:text-gray-700'
           ]"
         >
@@ -187,7 +187,7 @@ function formatTime(timestamp: number) {
             v-model="searchQuery"
             type="text"
             placeholder="搜索商品..."
-            class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
         </div>
       </div>
@@ -249,7 +249,7 @@ function formatTime(timestamp: number) {
                   </button>
                   <button
                     @click="openAdjustModal(product, 'adjust')"
-                    class="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
+                    class="px-2 py-1 text-xs bg-emerald-100 text-emerald-700 rounded hover:bg-emerald-200"
                   >
                     盘点
                   </button>
@@ -317,7 +317,7 @@ function formatTime(timestamp: number) {
             v-model="adjustNote"
             rows="2"
             placeholder="可选备注信息"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
           ></textarea>
         </div>
       </div>
