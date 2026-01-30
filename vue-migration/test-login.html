@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue登录测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .info {
+            color: blue;
+        }
+        button {
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vue登录功能测试</h1>
+    
+    <div class="test-section">
+        <h2>测试步骤</h2>
+        <ol>
+            <li>打开 <a href="http://localhost:3003" target="_blank">http://localhost:3003</a></li>
+            <li>你应该被重定向到登录页面</li>
+            <li>使用以下凭据登录：
+                <ul>
+                    <li>用户名: <code>admin</code></li>
+                    <li>密码: <code>admin123</code></li>
+                </ul>
+            </li>
+            <li>登录后应该跳转到仪表板页面</li>
+            <li>检查左侧边栏是否显示导航菜单</li>
+            <li>测试各个页面的导航</li>
+        </ol>
+    </div>
+    
+    <div class="test-section">
+        <h2>预期结果</h2>
+        <ul>
+            <li class="success">✓ 登录页面正常显示</li>
+            <li class="success">✓ 使用正确凭据可以登录</li>
+            <li class="success">✓ 登录后显示主布局（Header + Sidebar）</li>
+            <li class="success">✓ 可以访问仪表板页面</li>
+            <li class="success">✓ 可以访问POS页面</li>
+            <li class="success">✓ 可以访问商品管理页面</li>
+            <li class="success">✓ 可以访问订单管理页面</li>
+            <li class="success">✓ 路由守卫正常工作（未登录时重定向到登录页）</li>
+        </ul>
+    </div>
+    
+    <div class="test-section">
+        <h2>手动测试</h2>
+        <p>点击以下链接测试各个页面：</p>
+        <p>
+            <a href="http://localhost:3003/#/login" target="_blank">
+                <button>测试登录页面</button>
+            </a>
+            <a href="http://localhost:3003/#/" target="_blank">
+                <button>测试仪表板（需要先登录）</button>
+            </a>
+            <a href="http://localhost:3003/#/pos" target="_blank">
+                <button>测试POS页面（需要先登录）</button>
+            </a>
+        </p>
+        
+        <p>测试登录流程：</p>
+        <ol>
+            <li>先访问 <a href="http://localhost:3003/#/" target="_blank">仪表板</a> - 应该重定向到登录页</li>
+            <li>在登录页输入用户名 <code>admin</code> 和密码 <code>admin123</code></li>
+            <li>点击登录按钮</li>
+            <li>应该跳转到仪表板页面并显示完整布局</li>
+        </ol>
+    </div>
+    
+    <div class="test-section">
+        <h2>技术验证</h2>
+        <p>验证以下功能是否正常工作：</p>
+        <ul>
+            <li><strong>模拟认证</strong>：登录时会在localStorage设置token</li>
+            <li><strong>路由守卫</strong>：未认证用户访问受保护路由时重定向到登录页</li>
+            <li><strong>Pinia状态管理</strong>：登录状态在store中正确维护</li>
+            <li><strong>组件通信</strong>：Header和Sidebar组件能正确显示用户信息</li>
+            <li><strong>响应式设计</strong>：页面布局适应不同屏幕尺寸</li>
+        </ul>
+        
+        <p>检查localStorage：</p>
+        <pre><code>// 在浏览器控制台执行
+console.log('Auth token:', localStorage.getItem('auth_token'))
+console.log('Refresh token:', localStorage.getItem('refresh_token'))</code></pre>
+    </div>
+    
+    <div class="test-section">
+        <h2>问题排查</h2>
+        <p>如果遇到问题：</p>
+        <ol>
+            <li>检查浏览器控制台是否有JavaScript错误</li>
+            <li>检查网络面板是否有失败的API请求</li>
+            <li>验证localStorage中是否有token</li>
+            <li>检查Vue Devtools中的Pinia状态</li>
+            <li>确认路由配置正确</li>
+        </ol>
+        
+        <p>常见问题：</p>
+        <ul>
+            <li class="error">❌ 登录后页面空白：检查路由配置和MainLayout组件</li>
+            <li class="error">❌ 无法跳转：检查路由守卫逻辑</li>
+            <li class="error">❌ 样式错乱：检查Tailwind CSS是否正确加载</li>
+            <li class="error">❌ 控制台错误：检查TypeScript编译错误</li>
+        </ul>
+    </div>
+    
+    <div class="test-section">
+        <h2>测试结果</h2>
+        <p>请在浏览器中完成测试后记录结果：</p>
+        <textarea id="testResults" rows="10" cols="80" placeholder="记录测试结果和发现的问题..."></textarea>
+        <br>
+        <button onclick="saveResults()">保存测试结果</button>
+    </div>
+    
+    <script>
+        function saveResults() {
+            const results = document.getElementById('testResults').value;
+            localStorage.setItem('vue-login-test-results', results);
+            alert('测试结果已保存到localStorage');
+        }
+        
+        // 加载之前保存的结果
+        window.onload = function() {
+            const savedResults = localStorage.getItem('vue-login-test-results');
+            if (savedResults) {
+                document.getElementById('testResults').value = savedResults;
+            }
+        }
+    </script>
+</body>
+</html>

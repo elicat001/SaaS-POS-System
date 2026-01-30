@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue迁移项目路由测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        .status {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .status.success {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+        }
+        .status.error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+        }
+        .status.pending {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            color: #92400e;
+        }
+        .status-icon {
+            font-size: 20px;
+        }
+        .route-list {
+            margin-top: 30px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+        .route-item {
+            padding: 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .route-info {
+            flex: 1;
+        }
+        .route-name {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .route-path {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        .test-btn {
+            padding: 8px 16px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .test-btn:hover {
+            background: #059669;
+        }
+        .test-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+        .instructions {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #475569;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #334155;
+        }
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vue迁移项目路由测试</h1>
+        <div class="subtitle">验证所有二级页面链接是否正常工作</div>
+        
+        <div class="status success">
+            <span class="status-icon">✅</span>
+            <div>
+                <strong>开发服务器运行中</strong>
+                <div style="font-size: 14px; margin-top: 4px;">Vue开发服务器已在端口3000启动</div>
+            </div>
+        </div>
+        
+        <div class="route-list">
+            <h2>可测试的路由</h2>
+            
+            <div class="route-item">
+                <div class="route-info">
+                    <div class="route-name">仪表板 (Dashboard)</div>
+                    <div class="route-path">路径: /</div>
+                </div>
+                <a href="http://localhost:3000/#/" class="test-btn" target="_blank">测试</a>
+            </div>
+            
+            <div class="route-item">
+                <div class="route-info">
+                    <div class="route-name">POS收银</div>
+                    <div class="route-path">路径: /pos</div>
+                </div>
+                <a href="http://localhost:3000/#/pos" class="test-btn" target="_blank">测试</a>
+            </div>
+            
+            <div class="route-item">
+                <div class="route-info">
+                    <div class="route-name">商品管理</div>
+                    <div class="route-path">路径: /products</div>
+                </div>
+                <a href="http://localhost:3000/#/products" class="test-btn" target="_blank">测试</a>
+            </div>
+            
+            <div class="route-item">
+                <div class="route-info">
+                    <div class="route-name">订单管理</div>
+                    <div class="route-path">路径: /orders</div>
+                </div>
+                <a href="http://localhost:3000/#/orders" class="test-btn" target="_blank">测试</a>
+            </div>
+            
+            <div class="route-item">
+                <div class="route-info">
+                    <div class="route-name">分类设置</div>
+                    <div class="route-path">路径: /categories</div>
+                </div>
+                <a href="http://localhost:3000/#/categories" class="test-btn" target="_blank">测试</a>
+            </div>
+            
+            <div class="route-item">
+                <div class="route-info">
+                    <div class="route-name">进销存管理</div>
+                    <div class="route-path">路径: /inventory</div>
+                </div>
+                <a href="http://localhost:3000/#/inventory" class="test-btn" target="_blank">测试</a>
+            </div>
+            
+            <div class="route-item">
+                <div class="route-info">
+                    <div class="route-name">用户管理</div>
+                    <div class="route-path">路径: /users</div>
+                </div>
+                <a href="http://localhost:3000/#/users" class="test-btn" target="_blank">测试</a>
+            </div>
+            
+            <div class="route-item">
+                <div class="route-info">
+                    <div class="route-name">界面设置</div>
+                    <div class="route-path">路径: /config/interface</div>
+                </div>
+                <a href="http://localhost:3000/#/config/interface" class="test-btn" target="_blank">测试</a>
+            </div>
+            
+            <div class="route-item">
+                <div class="route-info">
+                    <div class="route-name">销售汇总</div>
+                    <div class="route-path">路径: /sales-summary</div>
+                </div>
+                <a href="http://localhost:3000/#/sales-summary" class="test-btn" target="_blank">测试</a>
+            </div>
+            
+            <div class="route-item">
+                <div class="route-info">
+                    <div class="route-name">营业报表</div>
+                    <div class="route-path">路径: /reports</div>
+                </div>
+                <a href="http://localhost:3000/#/reports" class="test-btn" target="_blank">测试</a>
+            </div>
+            
+            <div class="route-item">
+                <div class="route-info">
+                    <div class="route-name">桌台统计</div>
+                    <div class="route-path">路径: /table-stats</div>
+                </div>
+                <a href="http://localhost:3000/#/table-stats" class="test-btn" target="_blank">测试</a>
+            </div>
+            
+            <div class="route-item">
+                <div class="route-info">
+                    <div class="route-name">余额统计</div>
+                    <div class="route-path">路径: /balance-stats</div>
+                </div>
+                <a href="http://localhost:3000/#/balance-stats" class="test-btn" target="_blank">测试</a>
+            </div>
+            
+            <div class="route-item">
+                <div class="route-info">
+                    <div class="route-name">提成统计</div>
+                    <div class="route-path">路径: /commission-stats</div>
+                </div>
+                <a href="http://localhost:3000/#/commission-stats" class="test-btn" target="_blank">测试</a>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>测试说明</h3>
+            <ol>
+                <li>确保Vue开发服务器正在运行（端口3000）</li>
+                <li>点击上面的"测试"按钮会在新标签页打开对应页面</li>
+                <li>首次访问需要登录，使用以下测试账号：
+                    <ul>
+                        <li>用户名: admin</li>
+                        <li>密码: admin123</li>
+                    </ul>
+                </li>
+                <li>登录后可以测试所有页面导航</li>
+                <li>侧边栏的所有链接现在应该都能正常工作了</li>
+            </ol>
+            <p><strong>注意：</strong>部分页面显示"正在开发中"是正常的，这些是占位符页面，功能将在后续迁移中实现。</p>
+        </div>
+    </div>
+    
+    <script>
+        // 自动检查服务器状态
+        async function checkServerStatus() {
+            try {
+                const response = await fetch('http://localhost:3000', { mode: 'no-cors' });
+                console.log('服务器状态检查通过');
+            } catch (error) {
+                console.warn('无法连接到开发服务器，请确保已运行: cd vue-migration && npm run dev');
+            }
+        }
+        
+        // 页面加载时检查
+        window.addEventListener('load', checkServerStatus);
+    </script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue嵌套路由测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .info {
+            color: blue;
+        }
+        button {
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .test-card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            background: #f9f9f9;
+        }
+        .test-card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .iframe-container {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ccc;
+            margin: 10px 0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vue嵌套路由修复测试</h1>
+    
+    <div class="test-section">
+        <h2>问题描述</h2>
+        <p><strong>原始问题</strong>: 二级页面（/pos, /products, /orders）内容没有显示出来</p>
+        <p><strong>根本原因</strong>: MainLayout.vue中使用了<code>&lt;slot /&gt;</code>而不是<code>&lt;router-view /&gt;</code></p>
+        <p><strong>修复方案</strong>: 将<code>&lt;slot /&gt;</code>替换为<code>&lt;router-view /&gt;</code></p>
+        
+        <div class="info">
+            <p><strong>技术说明</strong>: 在Vue Router的嵌套路由中，父组件需要使用<code>&lt;router-view /&gt;</code>来渲染子路由的内容，而不是Vue的插槽<code>&lt;slot /&gt;</code>。</p>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>测试链接</h2>
+        <p>Vue开发服务器运行在: <strong>http://localhost:3010</strong></p>
+        
+        <div class="test-grid">
+            <div class="test-card">
+                <h3>1. 登录页面</h3>
+                <p>测试登录功能是否正常</p>
+                <a href="http://localhost:3010/#/login" target="_blank">
+                    <button>测试登录页</button>
+                </a>
+                <p><strong>测试步骤</strong>:</p>
+                <ol>
+                    <li>访问登录页</li>
+                    <li>输入用户名: <code>admin</code></li>
+                    <li>输入密码: <code>admin123</code></li>
+                    <li>点击登录</li>
+                </ol>
+            </div>
+            
+            <div class="test-card">
+                <h3>2. 仪表板页面</h3>
+                <p>测试主布局和嵌套路由</p>
+                <a href="http://localhost:3010/#/" target="_blank">
+                    <button>测试仪表板</button>
+                </a>
+                <p><strong>验证点</strong>:</p>
+                <ul>
+                    <li>显示Header组件</li>
+                    <li>显示Sidebar组件</li>
+                    <li>显示Dashboard内容</li>
+                    <li>URL应为: <code>/#/</code></li>
+                </ul>
+            </div>
+            
+            <div class="test-card">
+                <h3>3. POS页面</h3>
+                <p>测试二级页面路由</p>
+                <a href="http://localhost:3010/#/pos" target="_blank">
+                    <button>测试POS页面</button>
+                </a>
+                <p><strong>验证点</strong>:</p>
+                <ul>
+                    <li>显示Header和Sidebar</li>
+                    <li>显示POS组件内容</li>
+                    <li>URL应为: <code>/#/pos</code></li>
+                    <li>Sidebar中"代客下单"应高亮</li>
+                </ul>
+            </div>
+            
+            <div class="test-card">
+                <h3>4. 商品管理页面</h3>
+                <p>测试另一个二级页面</p>
+                <a href="http://localhost:3010/#/products" target="_blank">
+                    <button>测试商品管理</button>
+                </a>
+                <p><strong>验证点</strong>:</p>
+                <ul>
+                    <li>显示Header和Sidebar</li>
+                    <li>显示ProductList组件内容</li>
+                    <li>URL应为: <code>/#/products</code></li>
+                    <li>Sidebar中"商品管理"应展开</li>
+                </ul>
+            </div>
+            
+            <div class="test-card">
+                <h3>5. 订单管理页面</h3>
+                <p>测试第三个二级页面</p>
+                <a href="http://localhost:3010/#/orders" target="_blank">
+                    <button>测试订单管理</button>
+                </a>
+                <p><strong>验证点</strong>:</p>
+                <ul>
+                    <li>显示Header和Sidebar</li>
+                    <li>显示OrderList组件内容</li>
+                    <li>URL应为: <code>/#/orders</code></li>
+                    <li>Sidebar中"订单列表"应高亮</li>
+                </ul>
+            </div>
+            
+            <div class="test-card">
+                <h3>6. 路由导航测试</h3>
+                <p>测试页面间导航</p>
+                <p><strong>测试流程</strong>:</p>
+                <ol>
+                    <li>登录后进入仪表板</li>
+                    <li>点击Sidebar中的"经营工具" → "代客下单"</li>
+                    <li>应跳转到POS页面</li>
+                    <li>点击Sidebar中的"商品管理" → "商品列表"</li>
+                    <li>应跳转到商品管理页面</li>
+                    <li>点击浏览器后退按钮</li>
+                    <li>应返回POS页面</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>实时预览</h2>
+        <p>以下iframe显示当前测试页面（可能需要先登录）:</p>
+        <div class="iframe-container">
+            <iframe id="previewFrame" src="http://localhost:3010"></iframe>
+        </div>
+        <div>
+            <button onclick="loadPage('/#/login')">显示登录页</button>
+            <button onclick="loadPage('/#/')">显示仪表板</button>
+            <button onclick="loadPage('/#/pos')">显示POS页面</button>
+            <button onclick="loadPage('/#/products')">显示商品管理</button>
+            <button onclick="loadPage('/#/orders')">显示订单管理</button>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>代码修复详情</h2>
+        <h3>修复前 (MainLayout.vue):</h3>
+        <pre><code>&lt;template&gt;
+  &lt;div class="min-h-screen bg-[#f1f5f9] font-sans"&gt;
+    &lt;Header /&gt;
+    &lt;Sidebar /&gt;
+    &lt;main class="pt-14 pl-56 min-h-screen transition-all duration-300"&gt;
+      &lt;div class="p-6 min-w-[1000px]"&gt;
+        &lt;slot /&gt;  &lt;!-- 错误：使用了Vue插槽 --&gt;
+      &lt;/div&gt;
+    &lt;/main&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</code></pre>
+        
+        <h3>修复后 (MainLayout.vue):</h3>
+        <pre><code>&lt;template&gt;
+  &lt;div class="min-h-screen bg-[#f1f5f9] font-sans"&gt;
+    &lt;Header /&gt;
+    &lt;Sidebar /&gt;
+    &lt;main class="pt-14 pl-56 min-h-screen transition-all duration-300"&gt;
+      &lt;div class="p-6 min-w-[1000px]"&gt;
+        &lt;router-view /&gt;  &lt;!-- 正确：使用Vue Router视图 --&gt;
+      &lt;/div&gt;
+    &lt;/main&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</code></pre>
+        
+        <h3>路由配置 (routes.ts):</h3>
+        <pre><code>const routes: RouteRecordRaw[] = [
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/components/pages/Login.vue'),
+    meta: { requiresAuth: false, title: '登录' }
+  },
+  {
+    path: '/',
+    component: MainLayout,  // 父组件
+    meta: { requiresAuth: true },
+    children: [  // 子路由
+      {
+        path: '',
+        name: 'Dashboard',
+        component: () => import('@/components/pages/Dashboard.vue'),
+        meta: { title: '仪表板' }
+      },
+      {
+        path: 'pos',
+        name: 'POS',
+        component: () => import('@/components/pages/POS.vue'),
+        meta: { title: 'POS收银' }
+      },
+      // ... 其他子路由
+    ]
+  }
+]</code></pre>
+    </div>
+    
+    <div class="test-section">
+        <h2>测试验证清单</h2>
+        <p>请逐一验证以下项目:</p>
+        
+        <div id="checklist">
+            <p><input type="checkbox" id="check1"> <label for="check1">登录页面正常显示表单</label></p>
+            <p><input type="checkbox" id="check2"> <label for="check2">使用admin/admin123可以成功登录</label></p>
+            <p><input type="checkbox" id="check3"> <label for="check3">登录后跳转到仪表板页面</label></p>
+            <p><input type="checkbox" id="check4"> <label for="check4">仪表板显示Header和Sidebar</label></p>
+            <p><input type="checkbox" id="check5"> <label for="check5">仪表板内容区域显示正常</label></p>
+            <p><input type="checkbox" id="check6"> <label for="check6">点击"代客下单"跳转到POS页面</label></p>
+            <p><input type="checkbox" id="check7"> <label for="check7">POS页面内容正常显示</label></p>
+            <p><input type="checkbox" id="check8"> <label for="check8">点击"商品列表"跳转到商品管理页面</label></p>
+            <p><input type="checkbox" id="check9"> <label for="check9">商品管理页面内容正常显示</label></p>
+            <p><input type="checkbox" id="check10"> <label for="check10">点击"订单列表"跳转到订单管理页面</label></p>
+            <p><input type="checkbox" id="check11"> <label for="check11">订单管理页面内容正常显示</label></p>
+            <p><input type="checkbox" id="check12"> <label for="check12">浏览器后退/前进按钮工作正常</label></p>
+            <p><input type="checkbox" id="check13"> <label for="check13">Sidebar菜单高亮状态正确</label></p>
+            <p><input type="checkbox" id="check14"> <label for="check14">未登录时访问受保护页面重定向到登录页</label></p>
+        </div>
+        
+        <button onclick="checkAll()">全选</button>
+        <button onclick="uncheckAll()">全不选</button>
+        <button onclick="saveChecklist()">保存检查结果</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>问题排查</h2>
+        <p>如果仍然有问题，请检查:</p>
+        <ol>
+            <li>浏览器控制台是否有JavaScript错误</li>
+            <li>Vue Devtools中路由状态是否正确</li>
+            <li>Pinia store中的认证状态</li>
+            <li>网络面板是否有404错误</li>
+            <li>localStorage中是否有auth_token</li>
+            <li>TypeScript编译是否有错误</li>
+        </ol>
+        
+        <p>常见问题解决方案:</p>
+        <ul>
+            <li><strong>页面空白</strong>: 检查<code>&lt;router-view /&gt;</code>是否正确导入和使用</li>
+            <li><strong>路由不跳转</strong>: 检查路由配置和守卫逻辑</li>
+            <li><strong>样式错乱</strong>: 检查Tailwind CSS是否正确加载</li>
+            <li><strong>组件不显示</strong>: 检查组件导入和注册</li>
+        </ul>
+    </div>
+    
+    <script>
+        function loadPage(path) {
+            document.getElementById('previewFrame').src = 'http://localhost:3010' + path;
+        }
+        
+        function checkAll() {
+            const checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+            checkboxes.forEach(checkbox => checkbox.checked = true);
+        }
+        
+        function uncheckAll() {
+            const checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+            checkboxes.forEach(checkbox => checkbox.checked = false);
+        }
+        
+        function saveChecklist() {
+            const checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+            const results = [];
+            checkboxes.forEach((checkbox, index) => {
+                results.push({
+                    id: checkbox.id,
+                    label: checkbox.nextElementSibling.textContent,
+                    checked: checkbox.checked
+                });
+            });
+            
+            localStorage.setItem('vue-nested-routes-test', JSON.stringify(results));
+            alert('检查结果已保存到localStorage');
+        }
+        
+        // 加载保存的检查结果
+        window.onload = function() {
+            const savedResults = localStorage.getItem('vue-nested-routes-test');
+            if (savedResults) {
+                const results = JSON.parse(savedResults);
+                results.forEach(result => {
+                    const checkbox = document.getElementById(result.id);
+                    if (checkbox) {
+                        checkbox.checked = result.checked;
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

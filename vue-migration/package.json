@@ -1,0 +1,45 @@
+{
+  "name": "saas-pos-system-vue",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "type-check": "vue-tsc --noEmit",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "vue": "^3.4.0",
+    "vue-router": "^4.3.0",
+    "pinia": "^2.1.0",
+    "lucide-vue-next": "^0.446.0",
+    "recharts": "^3.4.1",
+    "axios": "^1.6.0",
+    "date-fns": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "@vue/tsconfig": "^0.5.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0",
+    "vue-tsc": "^2.0.0",
+    "@types/node": "^22.14.0",
+
+    "@vue/eslint-config-typescript": "^13.0.0",
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.23.0",
+    "prettier": "^3.2.5",
+    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "@tailwindcss/forms": "^0.5.7",
+    "@vitest/ui": "^1.6.0",
+    "jsdom": "^24.0.0",
+    "vitest": "^1.6.0",
+    "@vue/test-utils": "^2.4.5"
+  }
+}
